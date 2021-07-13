@@ -4,7 +4,7 @@
       U11 Node Fullstack App
     </h1>
     <h2>
-      What's your name?
+      What's your name
     </h2>
     <form @submit="setName">
     <input v-model="input"/>
