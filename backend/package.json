@@ -3,9 +3,21 @@
   "version": "1.0.0",
   "description": "Backend for U11",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "npm start"
+    "serve": "node backend/index.js",
+    "dev": "nodemon backend/index.js"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.13.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
 }
