@@ -12,6 +12,8 @@ app.use('/api/posts', posts);
 
 app.get('/', (req, res) => res.send('Welcome to U11 Backend'));
 
+app.get('/api/users', (req, res) => res.send('There are no users'));
+
 const PORT = process.env.PORT || 5000;
 
 mongoose.connect("mongodb+srv://root:root@cluster0.eqraj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParse: true, useUnifiedTopology: true })
