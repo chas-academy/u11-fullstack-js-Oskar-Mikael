@@ -21,9 +21,11 @@
 * [MongoDB](https://www.mongodb.com)
 * [Express JS](https://expressjs.com/)
 * [Vue JS](https://vuejs.org/)
-* [Node JS(https://nodejs.org/en/)
+* [Node JS](https://nodejs.org/en/)
 
 ## Standards and Structure
+
+Javascript and CSS follows the Airbnb code standards
 
 #### PSR-2 coding style guide
 
