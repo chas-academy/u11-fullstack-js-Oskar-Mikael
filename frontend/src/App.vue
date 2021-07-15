@@ -2,6 +2,9 @@
   <div id="app">
     <Home/>
     <Post/>
+    <p>
+    <router-link to="/login">Login</router-link>
+    </p>
   </div>
 </template>
 
