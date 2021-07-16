@@ -28,7 +28,7 @@ export default {
       axios
         .get('http://localhost:5000/api/posts')
         .then((res) => {
-          this.posts = res.data
+          this.posts = res.data[0].createdAt
           console.log(res)
         })
     }

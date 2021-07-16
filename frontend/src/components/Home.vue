@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>
-      U11 Node Fullstack App
+      Welcome to Bo Forums
     </h1>
     <h2>
       What's your name
@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'HelloWorld',
+  name: 'Home',
   props: {
     msg: String
   },
