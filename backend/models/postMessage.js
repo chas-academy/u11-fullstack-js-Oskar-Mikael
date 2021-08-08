@@ -10,11 +10,7 @@ const postSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  createdAt: {
-    type: Date,
-    default: new Date().toTimeString(),
-  },
-});
+}, {timestamps: true});
 
 const PostMessage = mongoose.model('PostMessage', postSchema);
 
