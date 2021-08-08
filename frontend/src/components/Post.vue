@@ -1,8 +1,8 @@
 <template>
     <div>
-        Posts
-        <p>
-            {{ posts }}
+        Users
+        <p v-for="post in posts" :key="post._id">
+            {{ post._id }}
         </p>
     </div>
 </template>
@@ -26,9 +26,9 @@ export default {
   methods: {
     getPosts () {
       axios
-        .get('http://localhost:5000/api/posts')
+        .get('http://localhost:5000/api/users/allusers')
         .then((res) => {
-          this.posts = res.data[0].createdAt
+          this.posts = res.data
           console.log(res)
         })
     }
