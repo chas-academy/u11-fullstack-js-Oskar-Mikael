@@ -15,24 +15,14 @@ const userSchema = mongoose.Schema(
       unique: true,
     },
     bio: String,
-    hash: String,
-    salt: String,
+    password: {
+      type: String,
+      required: [true, 'field cannot be blank'],
+    },
     isAdmin: Number,
   },
   { timestamps: true }
 );
-
-// userSchema.plugin(uniqueValidator, {message: 'is already taken'});
-
-// userSchema.methods.setPassword = (password) => {
-//     this.salt = crypto.randomBytes(16).toString('hex');
-//     this.hash = crypto.pbkdf2(password, this.salt, 10000, 512, 'sha512').toString('hex');
-// }
-
-// userSchema.methods.validPassword = (password) => {
-//     const hash = crypto.pbkdf2Sync(password, this.salt, 10000, 512, 'sha512').toString('hex');
-//     return this.hash === hash;
-// }
 
 const User = mongoose.model('User', userSchema);
 

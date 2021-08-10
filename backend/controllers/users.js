@@ -1,21 +1,46 @@
 import User from '../models/user.js';
+import bcrypt from 'bcryptjs';
 
 export const register = async (req, res) => {
-  const user = req.body;
 
-  const newUser = new User(user);
+  const {
+    username,
+    email,
+    password: plainTextPassword
+  } = req.body;
+
+  if (!username || typeof username !== 'string') {
+    return res.status(403).json({ message: 'Invalid Username' })
+  }
+
+  if (!plainTextPassword || typeof plainTextPassword !== 'string') {
+    return res.status(403).json({ message: 'Invalid Password' })
+  }
+
+  if (plainTextPassword.length < 8) {
+    return res.status(403).json({ message: 'Password need atleast 8 characters' })
+  }
+
+  const password = await bcrypt.hash(plainTextPassword, 10);
 
   try {
-    await newUser.save();
-    res.status(201).json(newUser);
+    const response = await User.create({
+      username,
+      email,
+      password
+    });
+    return res.status(201).json(response);
   } catch (error) {
-    res.status(409).json({ message: error.message });
+    if (error.code === 11000) {
+      return res.status(403).json({ message: `${error.keyValue[Object.keys(error.keyValue)[0]]} is already in use` })
+    }
+    return res.status(409).json({ message: error });
   }
 };
 
-export const login = async (req, res) => {};
+export const login = async (req, res) => { };
 
-export const logout = async (req, res) => {};
+export const logout = async (req, res) => { };
 
 export const getUsers = async (req, res) => {
   try {
