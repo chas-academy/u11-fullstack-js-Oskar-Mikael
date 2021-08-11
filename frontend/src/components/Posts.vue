@@ -1,6 +1,6 @@
 <template>
     <div>
-        Posts
+        Welcome to the posts
         <p>
             {{ posts }}
         </p>
