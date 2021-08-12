@@ -1,18 +1,29 @@
 import axios from 'axios'
+import router from '../../helpers/router.js'
 
 const state = {
-  user: null
+  user: null,
+  errors: null
 }
 const getters = {
   isAuthenticated: state => !!state.user,
-  StateUser: state => state.user
+  StateUser: state => state.user,
+  errors: state => state.errors
 }
 const actions = {
-  async LogIn ({ commit }, form) {
-    const response = await axios.post('users/login', form)
-    commit('setUser', response.data)
-    localStorage.setItem('token', response.data.token)
-    console.log(response)
+  LogIn ({ commit }, form) {
+    axios.post('users/login', form)
+      .then(res => {
+        commit('setUser', res.data)
+        localStorage.setItem('token', res.data.token)
+        console.log(res)
+        commit('setErrors', null)
+        router.push('/posts')
+      })
+      .catch(err => {
+        commit('setErrors', err.response.data.message)
+        console.log(err.response.data)
+      })
   },
 
   LogOut ({ commit }) {
@@ -21,11 +32,14 @@ const actions = {
   }
 }
 const mutations = {
-  setUser (state, username) {
-    state.user = username
+  setUser (state, res) {
+    state.user = res
   },
   clearUser (state) {
     state.user = null
+  },
+  setErrors (state, err) {
+    state.errors = err
   }
 }
 export default {

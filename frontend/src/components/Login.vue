@@ -14,7 +14,7 @@
           <input type="password" name="password" v-model="form.password"/>
           <button type="submit">Login</button>
       </form>
-        <p class="errors" v-if="errors">
+        <p class="errors" v-if="this.errors">
           {{ errors }}
         </p>
      <h4>
@@ -26,17 +26,18 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Login',
+
+  computed: mapGetters(['errors']),
 
   data () {
     return {
       form: {
         email: '',
         password: ''
-      },
-      errors: ''
+      }
     }
   },
 

@@ -17,6 +17,9 @@
         <li v-if="this.isAuthenticated" @click="logout">
           <router-link to="/login">Logout</router-link>
         </li>
+        <li v-if="this.isAuthenticated && this.StateUser.message.isAdmin">
+          <router-link to="/admin">Admin</router-link>
+        </li>
       </ul>
     </nav>
     <div class="container">
@@ -30,7 +33,10 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'App',
 
-  computed: mapGetters(['isAuthenticated']),
+  computed: {
+    ...mapGetters(['isAuthenticated']),
+    ...mapGetters(['StateUser'])
+  },
 
   methods: {
     ...mapActions(['LogOut']),
