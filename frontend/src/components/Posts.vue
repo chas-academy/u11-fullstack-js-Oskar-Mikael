@@ -1,20 +1,23 @@
 <template>
     <div>
         Users
-        <p v-for="post in posts" :key="post._id">
-            {{ post._id }}
+        <p v-for="post in allPosts" :key="post._id">
+            {{ post.username }}
         </p>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 'Posts',
 
+  computed: mapGetters(['allPosts']),
+
   mounted () {
-    this.getPosts()
+    this.fetchPosts()
   },
 
   data () {
@@ -24,15 +27,9 @@ export default {
   },
 
   methods: {
-    getPosts () {
-      axios
-        .get('http://localhost:5000/api/users/allusers')
-        .then((res) => {
-          this.posts = res.data
-          console.log(res)
-        })
-    }
+    ...mapActions(['fetchPosts'])
   }
+
 }
 </script>
 
