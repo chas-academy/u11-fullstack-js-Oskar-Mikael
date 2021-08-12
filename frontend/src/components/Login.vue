@@ -14,7 +14,7 @@
           <input type="password" name="password" v-model="form.password"/>
           <button type="submit">Login</button>
       </form>
-        <p class="errors" v-if="errors">
+        <p class="errors" v-if="this.errors">
           {{ errors }}
         </p>
      <h4>
@@ -26,33 +26,25 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'Login',
+
+  computed: mapGetters(['errors']),
 
   data () {
     return {
       form: {
         email: '',
         password: ''
-      },
-      errors: ''
+      }
     }
   },
 
   methods: {
+    ...mapActions(['LogIn']),
     login () {
-      axios
-        .post('http://localhost:5000/api/users/login', this.form)
-        .then((res) => {
-          console.log(res)
-          localStorage.setItem('token', res.data.token)
-          alert('Welcome ' + res.data.message.username)
-        })
-        .catch((err) => {
-          this.errors = err.response.data.message
-          console.log(err.response)
-        })
+      this.LogIn(this.form)
     }
   }
 }

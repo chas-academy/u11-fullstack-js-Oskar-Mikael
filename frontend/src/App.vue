@@ -8,11 +8,17 @@
         <li>
           <router-link to="/posts">Posts</router-link>
         </li>
-        <li>
+        <li v-if="!this.isAuthenticated">
+          <router-link to="/login">Login</router-link>
+        </li>
+        <li v-if="this.isAuthenticated">
           <router-link to="/login">Profile</router-link>
         </li>
-        <li>
-          <router-link to="/login">Login</router-link>
+        <li v-if="this.isAuthenticated" @click="logout">
+          <router-link to="/login">Logout</router-link>
+        </li>
+        <li v-if="this.isAuthenticated && this.StateUser.message.isAdmin">
+          <router-link to="/admin">Admin</router-link>
         </li>
       </ul>
     </nav>
@@ -23,9 +29,21 @@
 </template>
 
 <script>
-
+import { mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'App'
+  name: 'App',
+
+  computed: {
+    ...mapGetters(['isAuthenticated']),
+    ...mapGetters(['StateUser'])
+  },
+
+  methods: {
+    ...mapActions(['LogOut']),
+    logout () {
+      this.LogOut()
+    }
+  }
 }
 </script>
 

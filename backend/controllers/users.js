@@ -65,7 +65,6 @@ export const login = async (req, res) => {
 };
 
 export const logout = async (req, res) => {
-  localStorage.removeItem('token')
 };
 
 export const getUsers = async (req, res) => {

@@ -54,7 +54,7 @@ export default {
   methods: {
     register () {
       axios
-        .post('http://localhost:5000/api/users/register', this.form)
+        .post('/users/register', this.form)
         .then((res) => {
           console.log(res)
           if (res.status === 201) {
