@@ -47,6 +47,7 @@ export default {
         .then((res) => {
           console.log(res)
           localStorage.setItem('token', res.data.token)
+          alert('Welcome ' + res.data.message.username)
         })
         .catch((err) => {
           this.errors = err.response.data.message

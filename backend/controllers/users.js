@@ -64,7 +64,9 @@ export const login = async (req, res) => {
   return res.status(404).json({ message: 'Invalid password credentials' });
 };
 
-export const logout = async (req, res) => { };
+export const logout = async (req, res) => {
+  localStorage.removeItem('token')
+};
 
 export const getUsers = async (req, res) => {
   try {

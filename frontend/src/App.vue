@@ -16,7 +16,9 @@
         </li>
       </ul>
     </nav>
-    <router-view/>
+    <div class="container">
+      <router-view/>
+    </div>
   </div>
 </template>
 
@@ -31,6 +33,11 @@ export default {
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  .container {
+    margin: 0 auto;
+    max-width: 1140px;
   }
 
  .navbar {
