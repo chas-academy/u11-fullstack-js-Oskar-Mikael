@@ -7,19 +7,28 @@
             <p>
                 Username
             </p>
-            <input type="text" name="username" v-model="name"/>
+            <input type="text" name="username" v-model="form.username"/>
+            <p class="errors" v-if="errors.type == 'username'">
+                {{ errors.message }}
+            </p>
             <p>
                 Email
             </p>
-            <input type="email" name="email" v-model="email"/>
+            <input type="email" name="email" v-model="form.email"/>
+             <p class="errors" v-if="errors.type == 'email'">
+                {{ errors.message }}
+            </p>
             <p>
                 Password
             </p>
-            <input type="password" name="password" v-model="password"/>
+            <input type="password" name="password" v-model="form.password"/>
+             <p class="errors" v-if="errors.type == 'password'">
+                {{ errors.message }}
+            </p>
             <p>
                 Bio
             </p>
-            <input type="text" name="bio" v-model="bio"/>
+            <input type="text" name="bio" v-model="form.bio"/>
             <button type="submit">Register</button>
         </form>
     </div>
@@ -32,24 +41,29 @@ export default {
 
   data () {
     return {
-      username: '',
-      email: '',
-      password: '',
-      bio: ''
+      form: {
+        username: '',
+        email: '',
+        password: '',
+        bio: ''
+      },
+      errors: ''
     }
   },
 
   methods: {
     register () {
       axios
-        .post('http://localhost:5000/api/users/register', {
-          headers: {
-            'Content-type': 'application/json'
-          },
-          body: this.username
-        })
+        .post('http://localhost:5000/api/users/register', this.form)
         .then((res) => {
           console.log(res)
+          if (res.status === 201) {
+            this.$router.push('/login')
+          }
+        })
+        .catch((err) => {
+          this.errors = err.response.data.error
+          console.log(err.response)
         })
     }
   }
@@ -58,5 +72,8 @@ export default {
 </script>
 
 <style>
+.errors {
+    color: red;
+  }
 
 </style>
