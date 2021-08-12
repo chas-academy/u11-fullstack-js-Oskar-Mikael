@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions } from 'vuex'
 export default {
   name: 'Login',
 
@@ -41,18 +41,9 @@ export default {
   },
 
   methods: {
+    ...mapActions(['LogIn']),
     login () {
-      axios
-        .post('http://localhost:5000/api/users/login', this.form)
-        .then((res) => {
-          console.log(res)
-          localStorage.setItem('token', res.data.token)
-          alert('Welcome ' + res.data.message.username)
-        })
-        .catch((err) => {
-          this.errors = err.response.data.message
-          console.log(err.response)
-        })
+      this.LogIn(this.form)
     }
   }
 }
