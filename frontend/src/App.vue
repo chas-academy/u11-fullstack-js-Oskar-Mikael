@@ -1,31 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <Post/>
+    <nav>
+      <ul class="navbar">
+        <li>
+          <router-link to="/">Home</router-link>
+        </li>
+        <li>
+          <router-link to="/posts">Posts</router-link>
+        </li>
+        <li>
+          <router-link to="/login">Profile</router-link>
+        </li>
+        <li>
+          <router-link to="/login">Login</router-link>
+        </li>
+      </ul>
+    </nav>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-import Post from './components/Post.vue'
 
 export default {
-  name: 'App',
-  components: {
-    HelloWorld,
-    Post
-  }
+  name: 'App'
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+ .navbar {
+   display: inline-flex;
+   float: right;
+   list-style-type: none;
+ }
+
+ .navbar > li {
+   padding: 1.4rem;
+ }
 </style>
