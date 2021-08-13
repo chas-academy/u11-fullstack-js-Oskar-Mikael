@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Comment from './comment.js';
 
 const postSchema = mongoose.Schema({
   title: {
@@ -14,8 +15,9 @@ const postSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+
 }, {timestamps: true});
 
-const PostMessage = mongoose.model('PostMessage', postSchema);
+const Post = mongoose.model('Post', postSchema);
 
-export default PostMessage;
+export default Post;
