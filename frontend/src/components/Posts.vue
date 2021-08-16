@@ -1,7 +1,7 @@
 <template>
     <div>
         Users
-        <p v-for="post in allPosts" :key="post._id">
+        <p v-for="post in allPosts" :key="post._id" @click="getUser(post._id)">
             {{ post.username }}
         </p>
     </div>
@@ -27,7 +27,11 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchPosts'])
+    ...mapActions(['fetchPosts', 'getUser']),
+
+    clickUser (id) {
+      this.getUser(id)
+    }
   }
 
 }
