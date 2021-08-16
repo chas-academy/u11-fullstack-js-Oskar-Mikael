@@ -12,7 +12,7 @@
           <router-link to="/login">Login</router-link>
         </li>
         <li v-if="this.isAuthenticated">
-          <router-link to="/login">Profile</router-link>
+          <router-link to="/my-profile">Profile</router-link>
         </li>
         <li v-if="this.isAuthenticated" @click="logout">
           <router-link to="/login">Logout</router-link>
