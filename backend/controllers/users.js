@@ -77,8 +77,18 @@ export const getUsers = async (req, res) => {
   }
 };
 
+export const getUser = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id)
+    res.status(200).json({ message: user })
+  } catch (error) {
+    res.status(404).json({ message: error.message })
+  }
+}
+
 export const changePassword = async (req, res) => {
-  const { token, newPassword: plainTextPassword } = req.body;
+  const { newPassword: plainTextPassword } = req.body;
+  const token = req.headers.authorization
 
   if (plainTextPassword.length < 8) {
     return res.status(400).json({ message: 'Password need atleast 8 characters' })
