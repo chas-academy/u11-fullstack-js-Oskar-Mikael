@@ -1,8 +1,13 @@
 <template>
     <div>
-        Users
-        <p v-for="post in allPosts" :key="post._id" @click="getUser(post._id)">
-            {{ post.username }}
+        Posts
+        <p v-for="post in allPosts" :key="post._id" @click="postNavigate(post._id)">
+            {{ post.title }}
+        </p>
+        <p>
+          <router-link to="/create-post">
+          Create Post
+          </router-link>
         </p>
     </div>
 </template>
@@ -27,10 +32,10 @@ export default {
   },
 
   methods: {
-    ...mapActions(['fetchPosts', 'getUser']),
+    ...mapActions(['fetchPosts', 'navigateToPost']),
 
-    clickUser (id) {
-      this.getUser(id)
+    postNavigate (id) {
+      this.navigateToPost(id)
     }
   }
 

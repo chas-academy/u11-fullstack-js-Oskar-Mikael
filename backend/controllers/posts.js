@@ -3,7 +3,6 @@ import Post from "../models/post.js";
 export const getPosts = async (req, res) => {
     try {
         const posts = await Post.find();
-        console.log(posts);
         res.status(200).json(posts);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -22,3 +21,12 @@ export const createPost = async (req, res) => {
         res.status(409).json({ message: error.message });
     }
 }
+
+export const getPost = async (req, res) => {
+    try {
+      const post = await Post.findById(req.params.id)
+      res.status(200).json({ message: post })
+    } catch (error) {
+      res.status(404).json({ message: error.message })
+    }
+  }
