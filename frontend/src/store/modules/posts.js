@@ -21,6 +21,7 @@ const actions = {
     axios.post('posts', form)
       .then(res => {
         console.log(res)
+        router.push('/posts')
       })
   },
 
@@ -29,6 +30,14 @@ const actions = {
       .then(res => {
         commit('setSelectedPost', res.data)
         router.push('/posts/' + id)
+      })
+  },
+
+  navigateToEditPost ({ commit }, id) {
+    axios.get('/posts/' + id)
+      .then(res => {
+        commit('setSelectedPost', res.data)
+        router.push('/edit-post/' + id)
       })
   }
 }
