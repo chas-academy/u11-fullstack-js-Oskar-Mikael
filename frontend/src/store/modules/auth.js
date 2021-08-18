@@ -2,12 +2,17 @@ import axios from 'axios'
 import router from '../../helpers/router.js'
 
 const state = {
-  user: null,
+  user: {
+    message: {
+      _id: null
+    }
+  },
   selectedUser: null,
-  errors: null
+  errors: null,
+  authenticated: null
 }
 const getters = {
-  isAuthenticated: state => !!state.user,
+  isAuthenticated: state => state.authenticated,
   StateUser: state => state.user,
   SelectedUser: state => state.selectedUser,
   errors: state => state.errors
@@ -17,6 +22,7 @@ const actions = {
     axios.post('users/login', form)
       .then(res => {
         commit('setUser', res.data)
+        commit('setAuthenticated')
         localStorage.setItem('token', res.data.token)
         console.log(res)
         commit('setErrors', null)
@@ -33,6 +39,7 @@ const actions = {
     localStorage.removeItem('token')
     axios.defaults.headers.common.authorization = ''
     commit('clearUser')
+    commit('setAuthenticated')
   },
 
   getUser ({ commit }, id) {
@@ -49,7 +56,11 @@ const mutations = {
     state.user = res
   },
   clearUser (state) {
-    state.user = null
+    state.user = {
+      message: {
+        _id: null
+      }
+    }
   },
   setErrors (state, err) {
     state.errors = err
@@ -59,6 +70,9 @@ const mutations = {
   },
   clearSelectedUser (state) {
     state.selectedUser = null
+  },
+  setAuthenticated (state) {
+    state.authenticated = !state.authenticated
   }
 }
 export default {
