@@ -6,11 +6,11 @@ const postSchema = mongoose.Schema({
     type: String,
     required: [true, 'Title field is required']
   },
-  message: {
+  body: {
     type: String,
-    required: [true, 'Message field is required']
+    required: [true, 'Body field is required']
   },
-  creator: String,
+  creator: {},
   likeCount: {
     type: Number,
     default: 0,
