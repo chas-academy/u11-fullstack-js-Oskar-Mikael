@@ -6,7 +6,7 @@ import axios from 'axios'
 
 Vue.config.productionTip = false
 
-axios.defaults.baseURL = 'http://localhost:5000/api/'
+axios.defaults.baseURL = 'https://oskarmikaelu11.herokuapp.com/api/'
 axios.defaults.headers.common.authorization = localStorage.getItem('token')
 
 new Vue({
