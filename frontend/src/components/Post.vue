@@ -9,10 +9,10 @@
       <p>
           Posted by <span @click="clickUser">{{ this.selectedPost.message.creator.message.username }}</span>
       </p>
-      <p v-if="this.selectedPost.message.creator.message._id === this.StateUser.message._id" @click="postNavigate">
+      <p v-if="this.selectedPost.message.creator.message._id === this.StateUser.message._id || this.StateUser.message.isAdmin" @click="postNavigate">
           Edit post
       </p>
-      <p v-if="this.selectedPost.message.creator.message._id === this.StateUser.message._id" v-on:click="deletePost">
+      <p v-if="this.selectedPost.message.creator.message._id === this.StateUser.message._id || this.StateUser.message.isAdmin" v-on:click="deletePost">
           Delete post
       </p>
   </div>

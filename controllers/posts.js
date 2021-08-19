@@ -1,4 +1,5 @@
 import Post from "../models/post.js";
+import User from '../models/user.js'
 import jwt from 'jsonwebtoken';
 
 export const getPosts = async (req, res) => {
@@ -39,13 +40,15 @@ export const updatePost = async (req, res) => {
 
     const userId = user.id;
 
+    const userProfile = await User.findById(userId)
+
     const post = await Post.findById(req.params.id)
 
     const _id = post._id
 
     const { title, body } = req.body
 
-    if (post.creator.message._id === userId) {
+    if (post.creator.message._id === userId || userProfile.isAdmin) {
         try {
             await Post.updateOne(
                 { _id },
@@ -56,7 +59,7 @@ export const updatePost = async (req, res) => {
                         title
                     }
                 })
-            res.status(200).json({ message: body })
+            res.status(200).json({ message: userProfile })
         } catch (error) {
             res.status(400).json({ message: error.message })
         }
@@ -72,11 +75,13 @@ export const deletePost = async (req, res) => {
 
     const _id = user.id;
 
+    const userProfile = await User.findById(user.id)
+
     const post = await Post.findById(req.params.id)
 
     const postId = post._id
 
-    if (post.creator.message._id === _id) {
+    if (post.creator.message._id === _id || userProfile.isAdmin) {
         try {
             await post.deleteOne({ postId })
             res.status(200).json({ message: 'Post deleted' })
