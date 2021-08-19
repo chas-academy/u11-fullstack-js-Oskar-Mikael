@@ -4,7 +4,7 @@
       <div>
         Users
         <p v-for="post in allPosts" :key="post._id">
-            {{ post.username }}
+            {{ post.title }}
         </p>
     </div>
   </div>
