@@ -37,7 +37,7 @@ export const getPost = async (req, res) => {
 export const updatePost = async (req, res) => {
     const token = req.headers.authorization
 
-    const user = jwt.verify(token, 'mv239@0mv8!230*9!90rttbn23w2g534')
+    const user = jwt.verify(token, process.env.JWT_SECRET)
 
     const userId = user.id;
 
@@ -72,7 +72,7 @@ export const updatePost = async (req, res) => {
 export const deletePost = async (req, res) => {
     const token = req.headers.authorization
 
-    const user = jwt.verify(token, 'mv239@0mv8!230*9!90rttbn23w2g534')
+    const user = jwt.verify(token, process.env.JWT_SECRET)
 
     const _id = user.id;
 
@@ -99,7 +99,7 @@ export const addComment = async (req, res) => {
 
     const token = req.headers.authorization
 
-    const user = jwt.verify(token, 'mv239@0mv8!230*9!90rttbn23w2g534')
+    const user = jwt.verify(token, process.env.JWT_SECRET)
 
     const userProfile = await User.findById(user.id)
 
@@ -130,7 +130,7 @@ export const deleteComment = async (req, res) => {
 
     const token = req.headers.authorization
 
-    const user = jwt.verify(token, 'mv239@0mv8!230*9!90rttbn23w2g534')
+    const user = jwt.verify(token, process.env.JWT_SECRET)
 
     const userProfile = await User.findById(user.id)
 
@@ -158,4 +158,66 @@ export const deleteComment = async (req, res) => {
         res.status(400).json({ error: error.message })
     }
 
+}
+
+export const likePost = async (req, res) => {
+    const { id } = req.params
+
+    const token = req.headers.authorization
+
+    const user = jwt.verify(token, process.env.JWT_SECRET)
+
+    const userId = user.id
+
+    const post = await Post.findById(id)
+
+    const _id = post.id
+
+    try {
+        await Post.updateOne(
+            { _id },
+            {
+                $set:
+                {
+                    likeCount: post.likeCount + 1
+                }
+            })
+
+        await User.updateOne(
+            { _id: userId },
+            {
+                $push:
+                {
+                    likedPosts: post
+                }
+            },
+            { new: true }
+        )
+
+        res.status(200).json({ message: post })
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+}
+
+export const unlikePost = async (req, res) => {
+    const { id } = req.params
+
+    const post = await Post.findById(id)
+
+    const _id = post.id
+
+    try {
+        await Post.updateOne(
+            { _id },
+            {
+                $set:
+                {
+                    likeCount: post.likeCount - 1
+                }
+            })
+        res.status(200).json({ message: post })
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 }

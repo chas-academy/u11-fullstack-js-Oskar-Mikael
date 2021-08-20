@@ -2,8 +2,6 @@ import User from '../models/user.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = 'mv239@0mv8!230*9!90rttbn23w2g534'
-
 export const register = async (req, res) => {
 
   const {
@@ -57,9 +55,8 @@ export const login = async (req, res) => {
     const token = jwt.sign({
       id: user._id,
       email: user.email
-    }, JWT_SECRET)
-
-    return res.status(200).json({ message: user, token });
+    }, process.env.JWT_SECRET)
+    return res.status(200).json({ message: user, token,});
   }
   return res.status(404).json({ message: 'Invalid password credentials' });
 };
@@ -95,7 +92,7 @@ export const changePassword = async (req, res) => {
   }
 
   try {
-    const user = jwt.verify(token, JWT_SECRET)
+    const user = jwt.verify(token, process.env.JWT_SECRET)
 
     const _id = user.id;
 
