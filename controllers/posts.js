@@ -1,5 +1,6 @@
 import Post from "../models/post.js";
 import User from '../models/user.js'
+import Comment from '../models/comment.js'
 import jwt from 'jsonwebtoken';
 
 export const getPosts = async (req, res) => {
@@ -91,4 +92,70 @@ export const deletePost = async (req, res) => {
     } else {
         res.status(403).json({ message: 'You are not authorized' })
     }
+}
+
+export const addComment = async (req, res) => {
+    const { id, message } = req.body
+
+    const token = req.headers.authorization
+
+    const user = jwt.verify(token, 'mv239@0mv8!230*9!90rttbn23w2g534')
+
+    const userProfile = await User.findById(user.id)
+
+    const post = await Post.findById(id)
+
+    const _id = post._id
+
+    try {
+        await Post.updateOne(
+            { _id },
+            {
+                $push:
+                {
+                    comments: await new Comment({
+                        message,
+                        creator: userProfile
+                    })
+                }
+            })
+        res.status(201).json({ message: 'Test' })
+    } catch (error) {
+        res.status(400).json({ message: error })
+    }
+}
+
+export const deleteComment = async (req, res) => {
+    const commentId = req.body._id
+
+    const token = req.headers.authorization
+
+    const user = jwt.verify(token, 'mv239@0mv8!230*9!90rttbn23w2g534')
+
+    const userProfile = await User.findById(user.id)
+
+    const post = await Post.findById(req.params.id)
+
+    const _id = post.id
+
+    // const postComments = post.comments.map(comment => comment._id)
+
+    // const commentIndex = postComments.indexOf(commentId)
+
+    try {
+        await Post.findByIdAndUpdate(
+            { _id },
+            {
+                $pull:
+                {
+                    comments: { _id: commentId }
+                },
+            },
+            { new: true }
+        )
+        res.status(200).json({ message: _id })
+    } catch (error) {
+        res.status(400).json({ error: error.message })
+    }
+
 }

@@ -15,7 +15,7 @@ const postSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-
+  comments: [],
 }, {timestamps: true});
 
 const Post = mongoose.model('Post', postSchema);
