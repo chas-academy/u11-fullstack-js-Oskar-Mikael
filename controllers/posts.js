@@ -107,6 +107,10 @@ export const addComment = async (req, res) => {
 
     const _id = post._id
 
+    if (!message) {
+        return res.status(400).json({ error: 'Message field is required' })
+    }
+
     try {
         await Post.updateOne(
             { _id },
@@ -142,14 +146,14 @@ export const deleteComment = async (req, res) => {
 
     const commentIndex = postComments.indexOf(commentId)
 
-    if (post.comments[commentIndex].creator._id === user.id || userProfile.isAdmin) {
+    if (post.comments[commentIndex].creator._id == user.id || userProfile.isAdmin) {
         try {
             await Post.updateOne(
                 { _id },
                 {
                     $pull:
                     {
-                        comments: { _id: commentId }
+                        comments: post.comments[commentIndex]
                     }
                 },
                 { new: true }

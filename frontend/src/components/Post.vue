@@ -20,6 +20,9 @@
         </p>
       <form @submit.prevent="addComment">
         <input type="text" v-model="form.message">
+        <p v-if="this.errors">
+          {{ errors }}
+        </p>
         <button type="submit">Add Comment</button>
       </form>
       <p v-if="!this.StateUser.message.likedPosts.includes(this.selectedPost.message._id)" @click="likePost">
@@ -27,6 +30,9 @@
       </p>
       <p v-else @click="unlikePost">
         Unlike
+      </p>
+      <p>
+       {{ this.selectedPost.message.likeCount }} likes
       </p>
       <h3>
         Comments
@@ -59,7 +65,8 @@ export default {
       form: {
         message: '',
         id: this.$store.getters.selectedPost.message._id
-      }
+      },
+      errors: ''
     }
   },
 
@@ -85,6 +92,7 @@ export default {
         axios.delete('/posts/' + this.selectedPost.message._id, id)
           .then(res => {
             router.push('/posts')
+            console.log(res)
           })
       }
     },
@@ -100,10 +108,13 @@ export default {
     addComment () {
       axios.post('/posts/comment', this.form)
         .then(res => {
-          alert('Comment added')
           this.form.message = ''
           this.getPost()
+          this.errors = ''
           console.log(res)
+        })
+        .catch(err => {
+          this.errors = err.response.data.error
         })
     },
 
@@ -112,6 +123,7 @@ export default {
         axios.patch('/posts/comment/' + this.selectedPost.message._id, { id: id })
           .then(res => {
             console.log(res)
+            this.getPost()
           })
       }
     },
@@ -120,8 +132,9 @@ export default {
       axios.patch('/posts/like/' + this.selectedPost.message._id)
         .then(res => {
           console.log(res)
+          this.getUser()
+          this.getPost()
         })
-      this.getUser()
     },
 
     unlikePost () {
@@ -129,6 +142,7 @@ export default {
         .then(res => {
           console.log(res)
           this.getUser()
+          this.getPost()
         })
     },
 
@@ -136,7 +150,6 @@ export default {
       axios.get('/users/' + this.StateUser.message._id)
         .then(res => {
           this.setUser(res.data)
-          this.getUser()
         })
     }
   }
