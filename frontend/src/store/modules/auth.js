@@ -4,7 +4,8 @@ import router from '../../helpers/router.js'
 const state = {
   user: {
     message: {
-      _id: null
+      _id: null,
+      likedPosts: []
     }
   },
   selectedUser: null,
@@ -60,7 +61,8 @@ const mutations = {
   clearUser (state) {
     state.user = {
       message: {
-        _id: null
+        _id: null,
+        likedPosts: []
       }
     }
   },
