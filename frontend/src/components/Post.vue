@@ -15,6 +15,7 @@
       <p v-if="this.selectedPost.message.creator.message._id === this.StateUser.message._id || this.StateUser.message.isAdmin" @click="deletePost">
           Delete post
       </p>
+      <div v-if="this.isAuthenticated">
        <p>
           Comment
         </p>
@@ -25,10 +26,11 @@
         </p>
         <button type="submit">Add Comment</button>
       </form>
-      <p v-if="!this.StateUser.message.likedPosts.includes(this.selectedPost.message._id)" @click="likePost">
+      </div>
+      <p v-if="!this.StateUser.message.likedPosts.includes(this.selectedPost.message._id) && this.isAuthenticated" @click="likePost">
         Like
       </p>
-      <p v-else @click="unlikePost">
+      <p v-else-if="this.isAuthenticated" @click="unlikePost">
         Unlike
       </p>
       <p>
@@ -58,7 +60,7 @@ import router from '../helpers/router.js'
 export default {
   name: 'Post',
 
-  computed: mapGetters(['selectedPost', 'StateUser']),
+  computed: mapGetters(['selectedPost', 'StateUser', 'isAuthenticated']),
 
   data () {
     return {
