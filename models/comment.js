@@ -5,7 +5,7 @@ const commentSchema = mongoose.Schema({
         type: String,
         required: [true, 'Message field is required'],
     },
-    creator: String
+    creator: {}
 }, {timestamps: true});
 
 const Comment = mongoose.model('Comment', commentSchema);
