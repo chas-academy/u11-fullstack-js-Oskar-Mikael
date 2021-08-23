@@ -22,6 +22,12 @@
         <input type="text" v-model="form.message">
         <button type="submit">Add Comment</button>
       </form>
+      <p v-if="!this.StateUser.message.likedPosts.includes(this.selectedPost.message._id)" @click="likePost">
+        Like
+      </p>
+      <p v-else @click="unlikePost">
+        Unlike
+      </p>
       <h3>
         Comments
       </h3>
@@ -59,11 +65,12 @@ export default {
 
   mounted () {
     this.getPost()
+    this.getUser()
   },
 
   methods: {
     ...mapActions(['getUser', 'navigateToEditPost']),
-    ...mapMutations(['setSelectedPost']),
+    ...mapMutations(['setSelectedPost', 'setUser']),
 
     clickUser () {
       this.getUser(this.selectedPost.message.creator.message._id)
@@ -73,9 +80,9 @@ export default {
       this.navigateToEditPost(this.selectedPost.message._id)
     },
 
-    deletePost () {
+    deletePost (id) {
       if (confirm('Are you sure you want to delete this post?')) {
-        axios.delete('/posts/' + this.selectedPost.message._id)
+        axios.delete('/posts/' + this.selectedPost.message._id, id)
           .then(res => {
             router.push('/posts')
           })
@@ -101,12 +108,36 @@ export default {
     },
 
     deleteComment (id) {
-      if (confirm('Are you sure you want to delete this post?')) {
-        axios.patch('/posts/comment/' + this.selectedPost.message._id, id)
+      if (confirm('Are you sure you want to delete this comment?')) {
+        axios.patch('/posts/comment/' + this.selectedPost.message._id, { id: id })
           .then(res => {
             console.log(res)
           })
       }
+    },
+
+    likePost () {
+      axios.patch('/posts/like/' + this.selectedPost.message._id)
+        .then(res => {
+          console.log(res)
+        })
+      this.getUser()
+    },
+
+    unlikePost () {
+      axios.patch('/posts/unlike/' + this.selectedPost.message._id)
+        .then(res => {
+          console.log(res)
+          this.getUser()
+        })
+    },
+
+    getUser () {
+      axios.get('/users/' + this.StateUser.message._id)
+        .then(res => {
+          this.setUser(res.data)
+          this.getUser()
+        })
     }
   }
 }

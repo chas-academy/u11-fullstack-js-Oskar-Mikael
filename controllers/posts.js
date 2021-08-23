@@ -126,7 +126,7 @@ export const addComment = async (req, res) => {
 }
 
 export const deleteComment = async (req, res) => {
-    const commentId = req.body._id
+    const commentId = req.body.id
 
     const token = req.headers.authorization
 
@@ -138,24 +138,28 @@ export const deleteComment = async (req, res) => {
 
     const _id = post.id
 
-    // const postComments = post.comments.map(comment => comment._id)
+    const postComments = post.comments.map(comment => comment._id)
 
-    // const commentIndex = postComments.indexOf(commentId)
+    const commentIndex = postComments.indexOf(commentId)
 
-    try {
-        await Post.findByIdAndUpdate(
-            { _id },
-            {
-                $pull:
+    if (post.comments[commentIndex].creator._id === user.id || userProfile.isAdmin) {
+        try {
+            await Post.updateOne(
+                { _id },
                 {
-                    comments: { _id: commentId }
+                    $pull:
+                    {
+                        comments: { _id: commentId }
+                    }
                 },
-            },
-            { new: true }
-        )
-        res.status(200).json({ message: _id })
-    } catch (error) {
-        res.status(400).json({ error: error.message })
+                { new: true }
+            )
+            res.status(200).json({ message: post })
+        } catch (error) {
+            res.status(400).json({ error: error.message })
+        }
+    } else {
+        res.status(403).json({ error: 'You are not authorized' })
     }
 
 }
@@ -188,7 +192,7 @@ export const likePost = async (req, res) => {
             {
                 $push:
                 {
-                    likedPosts: post
+                    likedPosts: _id
                 }
             },
             { new: true }
@@ -203,6 +207,12 @@ export const likePost = async (req, res) => {
 export const unlikePost = async (req, res) => {
     const { id } = req.params
 
+    const token = req.headers.authorization
+
+    const user = jwt.verify(token, process.env.JWT_SECRET)
+
+    const userId = user.id
+
     const post = await Post.findById(id)
 
     const _id = post.id
@@ -216,6 +226,18 @@ export const unlikePost = async (req, res) => {
                     likeCount: post.likeCount - 1
                 }
             })
+
+        await User.updateOne(
+            { _id: userId },
+            {
+                $pull:
+                {
+                    likedPosts: post.id
+                }
+            },
+            { new: true }
+        )
+
         res.status(200).json({ message: post })
     } catch (error) {
         res.status(400).json({ error: error.message })
