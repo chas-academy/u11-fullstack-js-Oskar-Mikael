@@ -8,9 +8,6 @@
           Category
         </p>
         <select v-model="form.category">
-          <option hidden>
-            -Select Category-
-          </option>
           <option>
             Family
           </option>

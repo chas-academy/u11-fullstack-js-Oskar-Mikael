@@ -26,6 +26,23 @@ export const getPostsByCategory = async (req, res) => {
   }
 };
 
+export const searchPosts = async (req, res) => {
+  const { category, title } = req.query;
+
+  try {
+    const posts = await Post.find({
+      category: { $regex: category, $exists: true, $ne: null },
+      title: { $regex: title, $options: 'i', $exists: true, $ne: null },
+    });
+    if (posts.length === 0) {
+      res.status(404).json({ message: 'No posts found' });
+    }
+    res.status(200).json({ posts });
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 export const createPost = async (req, res) => {
   const post = req.body;
 
@@ -33,7 +50,7 @@ export const createPost = async (req, res) => {
 
   try {
     await newPost.save();
-    res.status(201).json(newPost);
+    res.status(201).json({ message: newPost });
   } catch (error) {
     res.status(409).json({ message: error.message });
   }

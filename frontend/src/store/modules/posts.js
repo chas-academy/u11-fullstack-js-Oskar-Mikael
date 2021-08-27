@@ -24,11 +24,29 @@ const actions = {
       .then(res => {
         commit('setPosts', res.data.posts)
         commit('setPostErrors', null)
+        router.push('/posts')
         console.log(res)
       })
       .catch(err => {
         commit('setPosts', '')
         commit('setPostErrors', err.response.data.message)
+        router.push('/posts')
+        console.log(err)
+      })
+  },
+
+  searchPosts ({ commit }, form) {
+    axios.get('posts/search?category=' + form.selectedCategory + '&title=' + form.searchTitle)
+      .then(res => {
+        commit('setPosts', res.data.posts)
+        commit('setPostErrors', null)
+        router.push('/posts')
+        console.log(res)
+      })
+      .catch(err => {
+        commit('setPosts', '')
+        commit('setPostErrors', err.response.data.message)
+        router.push('/posts')
         console.log(err)
       })
   },
@@ -37,7 +55,8 @@ const actions = {
     axios.post('posts', form)
       .then(res => {
         console.log(res)
-        router.push('/posts')
+        commit('setSelectedPost', res.data)
+        router.push('/posts/' + res.data.message._id)
       })
   },
 

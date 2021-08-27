@@ -1,26 +1,46 @@
 <template>
     <div>
-        Posts
-        <p v-for="post in allPosts" :key="post._id" @click="postNavigate(post._id)">
+        Categories
+        <p>
+          Category
+        </p>
+        <form @change="selectCategory">
+          <select v-model="selectedCategory">
+            <option>
+              Family
+            </option>
+            <option>
+              Sports
+            </option>
+            <option>
+              Coding
+            </option>
+          </select>
+        </form>
+        <!-- <p v-for="post in allPosts" :key="post._id" @click="postNavigate(post._id)">
             {{ post.title }}
         </p>
         <p v-if="this.postErrors">
           {{ this.postErrors }}
-        </p>
+        </p> -->
         <p>
           <router-link to="/create-post">
           Create Post
           </router-link>
         </p>
+        <Search />
     </div>
 </template>
 
 <script>
 
 import { mapGetters, mapActions } from 'vuex'
+import Search from './Search.vue'
 
 export default {
-  name: 'Posts',
+  name: 'Categories',
+
+  components: { Search },
 
   computed: mapGetters(['allPosts', 'postErrors']),
 
