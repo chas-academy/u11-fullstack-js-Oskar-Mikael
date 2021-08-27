@@ -6,7 +6,7 @@
           <router-link to="/">Home</router-link>
         </li>
         <li>
-          <router-link to="/posts">Posts</router-link>
+          <router-link to="/categories">Posts</router-link>
         </li>
         <li v-if="!this.isAuthenticated">
           <router-link to="/login">Login</router-link>
