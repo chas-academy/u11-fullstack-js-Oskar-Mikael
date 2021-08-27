@@ -9,6 +9,9 @@
       <p>
           Posted by <span @click="clickUser">{{ this.selectedPost.message.creator.message.username }}</span>
       </p>
+      <p>
+        {{ this.selectedPost.message.category }}
+      </p>
       <p v-if="this.selectedPost.message.creator.message._id === this.StateUser.message._id || this.StateUser.message.isAdmin" @click="postNavigate">
           Edit post
       </p>

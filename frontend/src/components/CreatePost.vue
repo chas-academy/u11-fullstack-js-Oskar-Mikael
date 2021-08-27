@@ -4,6 +4,23 @@
           Create Post
       </h2>
       <form @submit.prevent="addPost">
+        <p>
+          Category
+        </p>
+        <select v-model="form.category">
+          <option hidden>
+            -Select Category-
+          </option>
+          <option>
+            Family
+          </option>
+          <option>
+            Sports
+          </option>
+          <option>
+            Coding
+          </option>
+        </select>
           <p>
               Title
           </p>
@@ -25,6 +42,7 @@ export default {
   data () {
     return {
       form: {
+        category: '',
         title: '',
         body: '',
         creator: this.$store.getters.StateUser

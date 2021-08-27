@@ -3,18 +3,34 @@ import router from '../../helpers/router.js'
 
 const state = {
   posts: [],
-  post: null
+  post: null,
+  postErrors: ''
 }
 
 const getters = {
   allPosts: state => state.posts,
-  selectedPost: state => state.post
+  selectedPost: state => state.post,
+  postErrors: state => state.postErrors
 }
 
 const actions = {
   async fetchPosts ({ commit }) {
     const response = await axios.get('posts')
     commit('setPosts', response.data)
+  },
+
+  fetchCategoryPosts ({ commit }, category) {
+    axios.get('posts/category?category=' + category)
+      .then(res => {
+        commit('setPosts', res.data.posts)
+        commit('setPostErrors', null)
+        console.log(res)
+      })
+      .catch(err => {
+        commit('setPosts', '')
+        commit('setPostErrors', err.response.data.message)
+        console.log(err)
+      })
   },
 
   createPost ({ commit }, form) {
@@ -44,7 +60,8 @@ const actions = {
 
 const mutations = {
   setPosts: (state, posts) => (state.posts = posts),
-  setSelectedPost: (state, post) => (state.post = post)
+  setSelectedPost: (state, post) => (state.post = post),
+  setPostErrors: (state, errors) => (state.postErrors = errors)
 }
 
 export default {
