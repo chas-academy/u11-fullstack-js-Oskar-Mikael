@@ -27,7 +27,7 @@ const actions = {
         localStorage.setItem('token', res.data.token)
         console.log(res)
         commit('setErrors', null)
-        router.push('/posts')
+        router.push('/my-profile')
         axios.defaults.headers.common.authorization = localStorage.getItem('token')
         axios.defaults.headers.common.isadmin = res.data.message.isAdmin
       })
