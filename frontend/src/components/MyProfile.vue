@@ -3,6 +3,24 @@
       <h2>
           {{ this.StateUser.message.username }}
       </h2>
+      <h3>
+        Posts
+      </h3>
+      <p v-for="post in posts" :key="post._id" @click="postNavigate(post._id)">
+        {{ post.title }}
+      </p>
+      <h3>
+        Settings
+      </h3>
+      <p>
+        Private Profile
+      </p>
+      <form v-if="!this.StateUser.message.isPrivate" @change="privateTrue($store.getters.StateUser.message._id)">
+        <input type="checkbox"/>
+      </form>
+      <form v-else @change="privateFalse($store.getters.StateUser.message._id)">
+        <input type="checkbox" checked/>
+      </form>
       <p>
         Update password
       </p>
@@ -14,7 +32,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import axios from 'axios'
 export default {
   name: 'MyProfile',
@@ -23,13 +41,21 @@ export default {
     return {
       form: {
         newPassword: ''
-      }
+      },
+      posts: ''
     }
+  },
+
+  mounted () {
+    this.getUserPosts()
+    this.getUser()
   },
 
   computed: mapGetters(['StateUser']),
 
   methods: {
+    ...mapActions(['navigateToPost']),
+
     updatePassword () {
       axios.patch('/users/change-password', this.form)
         .then(res => {
@@ -40,8 +66,43 @@ export default {
           console.log(err)
           alert(err.response.data.message)
         })
+    },
+
+    getUserPosts () {
+      axios.get('/posts/user/' + this.StateUser.message._id)
+        .then(res => {
+          this.posts = res.data.message
+          console.log(res)
+        })
+    },
+
+    postNavigate (id) {
+      this.navigateToPost(id)
+    },
+
+    getUser () {
+      axios.get('/users/' + this.StateUser.message._id)
+        .then(res => {
+          this.$store.commit('setUser', res.data)
+          console.log(res)
+        })
+    },
+
+    privateTrue (id) {
+      axios.patch('/users/private-true/' + id)
+        .then(res => {
+          console.log(res)
+        })
+    },
+
+    privateFalse (id) {
+      axios.patch('/users/private-false/' + id)
+        .then(res => {
+          console.log(res)
+        })
     }
   }
+
 }
 </script>
 

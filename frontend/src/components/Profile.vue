@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div v-if="this.SelectedUser.message.isPrivate">
+      This profile is private
+    </div>
+    <div v-else>
       <h2>
           {{ this.SelectedUser.message.username }}
       </h2>
@@ -12,6 +16,7 @@
       <p @click="postNavigate(post._id)" v-for="post in userPosts" :key="post._id">
         {{ post.title }}
       </p>
+    </div>
   </div>
 </template>
 
