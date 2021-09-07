@@ -211,6 +211,53 @@ export const deleteComment = async (req, res) => {
   }
 };
 
+export const editComment = async (req, res) => {
+  const { id } = req.body;
+
+  const token = req.headers.authorization;
+
+  const user = jwt.verify(token, process.env.JWT_SECRET);
+
+  const userProfile = await User.findById(user.id);
+
+  const post = await Post.findById(req.params.id);
+
+  const _id = post.id;
+
+  const postComments = post.comments.map((comment) => comment._id);
+
+  const commentIndex = postComments.indexOf(id.id);
+
+  const message = post.comments[commentIndex].message;
+
+  if (
+    post.comments[commentIndex].creator._id == user.id ||
+    userProfile.isAdmin
+  ) {
+    try {
+      await Post.updateOne(
+        { _id: _id,
+        comments: {
+          $elemMatch: {
+            _id: id.id
+          }
+        }
+      },
+          { $set: {
+            "comments.$.message": id.comment
+          }
+        },
+        { new: true }
+      );
+      res.status(200).json({ message: post });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    res.status(403).json({ error: 'You are not authorized' });
+  }
+}
+
 export const likePost = async (req, res) => {
   const { id } = req.params;
 
