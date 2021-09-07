@@ -12,6 +12,17 @@ export const getPosts = async (req, res) => {
   }
 };
 
+export const getUsersPosts = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const posts = await Post.find({ 'creator.message._id': id })
+    res.status(200).json({ message: posts })
+  } catch (error) {
+    res.status(400).json({ message: error.message })
+  }
+};
+
 export const getPostsByCategory = async (req, res) => {
   const { category } = req.query;
 

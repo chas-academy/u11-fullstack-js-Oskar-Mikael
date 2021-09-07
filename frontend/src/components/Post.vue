@@ -77,7 +77,7 @@ export default {
 
   mounted () {
     this.getPost()
-    this.getUser()
+    this.getCurrentUser()
   },
 
   methods: {
@@ -151,7 +151,7 @@ export default {
         })
     },
 
-    getUser () {
+    getCurrentUser () {
       axios.get('/users/' + this.StateUser.message._id)
         .then(res => {
           this.setUser(res.data)

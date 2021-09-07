@@ -27,7 +27,7 @@ const actions = {
         localStorage.setItem('token', res.data.token)
         console.log(res)
         commit('setErrors', null)
-        router.push('/posts')
+        router.push('/my-profile')
         axios.defaults.headers.common.authorization = localStorage.getItem('token')
         axios.defaults.headers.common.isadmin = res.data.message.isAdmin
       })
@@ -39,8 +39,8 @@ const actions = {
 
   LogOut ({ commit }) {
     localStorage.removeItem('token')
-    axios.defaults.headers.common.authorization = ''
-    axios.defaults.headers.common.isadmin = ''
+    delete axios.defaults.headers.common.authorization
+    delete axios.defaults.headers.common.isadmin
     commit('clearUser')
     commit('setAuthenticated')
   },

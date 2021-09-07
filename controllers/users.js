@@ -8,7 +8,8 @@ export const register = async (req, res) => {
     username,
     email,
     password: plainTextPassword,
-    bio
+    bio,
+    country
   } = req.body;
 
   if (plainTextPassword.length < 8) {
@@ -23,6 +24,10 @@ export const register = async (req, res) => {
     return res.status(400).json({ error: { type: 'email', message: 'Email is required' } });
   }
 
+  if (!country) {
+    return res.status(400).json({ error: { type: 'country', message: 'Country is required' } });
+  }
+
   const password = await bcrypt.hash(plainTextPassword, 10);
 
   try {
@@ -30,7 +35,8 @@ export const register = async (req, res) => {
       username,
       email,
       password,
-      bio
+      bio,
+      country
     });
     return res.status(201).json(response);
   } catch (error) {
@@ -56,7 +62,7 @@ export const login = async (req, res) => {
       id: user._id,
       email: user.email
     }, process.env.JWT_SECRET)
-    return res.status(200).json({ message: user, token,});
+    return res.status(200).json({ message: user, token, });
   }
   return res.status(404).json({ message: 'Invalid password credentials' });
 };
@@ -104,7 +110,43 @@ export const changePassword = async (req, res) => {
         $set: { password }
       })
     res.status(200).json({ message: 'Password updated' })
-  } catch(error) {
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ message: 'There was an error' })
+  }
+}
+
+export const setPrivateTrue = async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  const _id = user.id
+
+  try {
+    await User.updateOne(
+      { _id },
+      {
+        $set: { isPrivate: 1}
+      })
+    res.status(200).json({ message: 'Profile updated' })
+  } catch (error) {
+    console.log(error)
+    res.status(400).json({ message: 'There was an error' })
+  }
+}
+
+export const setPrivateFalse = async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  const _id = user.id
+
+  try {
+    await User.updateOne(
+      { _id },
+      {
+        $set: { isPrivate: 0 }
+      })
+    res.status(200).json({ message: 'Profile updated' })
+  } catch (error) {
     console.log(error)
     res.status(400).json({ message: 'There was an error' })
   }
