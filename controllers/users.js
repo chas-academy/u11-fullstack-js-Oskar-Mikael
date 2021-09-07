@@ -8,7 +8,8 @@ export const register = async (req, res) => {
     username,
     email,
     password: plainTextPassword,
-    bio
+    bio,
+    country
   } = req.body;
 
   if (plainTextPassword.length < 8) {
@@ -23,6 +24,10 @@ export const register = async (req, res) => {
     return res.status(400).json({ error: { type: 'email', message: 'Email is required' } });
   }
 
+  if (!country) {
+    return res.status(400).json({ error: { type: 'country', message: 'Country is required' } });
+  }
+
   const password = await bcrypt.hash(plainTextPassword, 10);
 
   try {
@@ -30,7 +35,8 @@ export const register = async (req, res) => {
       username,
       email,
       password,
-      bio
+      bio,
+      country
     });
     return res.status(201).json(response);
   } catch (error) {

@@ -39,8 +39,8 @@ const actions = {
 
   LogOut ({ commit }) {
     localStorage.removeItem('token')
-    axios.defaults.headers.common.authorization = ''
-    axios.defaults.headers.common.isadmin = ''
+    delete axios.defaults.headers.common.authorization
+    delete axios.defaults.headers.common.isadmin
     commit('clearUser')
     commit('setAuthenticated')
   },

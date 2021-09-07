@@ -29,6 +29,20 @@
                 Bio
             </p>
             <input type="text" name="bio" v-model="form.bio"/>
+            <p>
+              Country
+            </p>
+            <select name="country">
+              <option hidden value=''>
+                -Select Country-
+              </option>
+              <option v-for="country in countries" :key="country.id">
+                {{ country.name }}
+              </option>
+            </select>
+            <p class="errors" v-if="errors.type == 'country'">
+                {{ errors.message }}
+            </p>
             <button type="submit">Register</button>
         </form>
     </div>
@@ -39,6 +53,10 @@ import axios from 'axios'
 export default {
   name: 'Register',
 
+  mounted () {
+    this.getCountries()
+  },
+
   data () {
     return {
       form: {
@@ -47,7 +65,8 @@ export default {
         password: '',
         bio: ''
       },
-      errors: ''
+      errors: '',
+      countries: ''
     }
   },
 
@@ -64,6 +83,16 @@ export default {
         .catch((err) => {
           this.errors = err.response.data.error
           console.log(err.response)
+        })
+    },
+
+    getCountries () {
+      delete axios.defaults.headers.common.authorization
+      axios.get('https://restcountries.eu/rest/v2/all')
+        .then(res => {
+          console.log(res)
+          this.countries = res.data
+          axios.defaults.headers.common.authorization = localStorage.getItem('token')
         })
     }
   }
