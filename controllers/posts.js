@@ -228,26 +228,25 @@ export const editComment = async (req, res) => {
 
   const commentIndex = postComments.indexOf(id.id);
 
-  const message = post.comments[commentIndex].message;
-
   if (
     post.comments[commentIndex].creator._id == user.id ||
     userProfile.isAdmin
   ) {
     try {
-      await Post.updateOne(
-        { _id: _id,
-        comments: {
-          $elemMatch: {
-            _id: id.id
-          }
-        }
-      },
-          { $set: {
-            "comments.$.message": id.comment
+      await Post.findOneAndUpdate(
+        { _id: _id },
+        {
+          $set: {
+            "comments.$[elem].message": id.comment
           }
         },
-        { new: true }
+        {
+          arrayFilters: [
+            {
+              "elem._id": id.id
+            }
+          ]
+        }
       );
       res.status(200).json({ message: post });
     } catch (error) {

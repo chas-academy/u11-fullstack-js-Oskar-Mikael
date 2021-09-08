@@ -25,17 +25,17 @@
     <div class="container">
       <router-view/>
     </div>
-    <Loading />
+    <!-- <Loading /> -->
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Loading from './components/Loading.vue'
+// import Loading from './components/Loading.vue'
 export default {
   name: 'App',
 
-  components: { Loading },
+  // components: { Loading },
 
   computed: {
     ...mapGetters(['isAuthenticated']),
