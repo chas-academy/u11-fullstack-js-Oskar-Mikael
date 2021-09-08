@@ -80,7 +80,7 @@ export default {
 
   methods: {
     ...mapActions(['getUser', 'navigateToEditPost']),
-    ...mapMutations(['setSelectedPost', 'setUser']),
+    ...mapMutations(['setSelectedPost', 'setUser', 'loadingTrue', 'loadingFalse']),
 
     clickUser () {
       this.getUser(this.selectedPost.message.creator.message._id)
@@ -92,19 +92,23 @@ export default {
 
     deletePost (id) {
       if (confirm('Are you sure you want to delete this post?')) {
+        this.loadingTrue()
         axios.delete('/posts/' + this.selectedPost.message._id, id)
           .then(res => {
             router.push('/posts')
             console.log(res)
+            this.loadingFalse()
           })
       }
     },
 
     getPost () {
+      this.loadingTrue()
       axios.get('/posts/' + this.$route.params.id)
         .then(res => {
           this.setSelectedPost(res.data)
           console.log(res.data)
+          this.loadingFalse()
         })
     },
 

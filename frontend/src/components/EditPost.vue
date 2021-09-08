@@ -20,6 +20,7 @@
 <script>
 import axios from 'axios'
 import router from '../helpers/router.js'
+import { mapMutations } from 'vuex'
 export default {
   name: 'EditPost',
 
@@ -33,14 +34,19 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['loadingTrue', 'loadingFalse']),
+
     updatePost () {
+      this.loadingTrue()
       axios.patch('/posts/' + this.$store.getters.selectedPost.message._id, this.form)
         .then(res => {
           alert(res.data.message)
           router.back()
+          this.loadingFalse()
         })
         .catch(err => {
           console.log(err.message)
+          this.loadingFalse()
         })
     }
   }
