@@ -56,7 +56,12 @@ const actions = {
       .then(res => {
         console.log(res)
         commit('setSelectedPost', res.data)
+        commit('setPostErrors', null)
         router.push('/posts/' + res.data.message._id)
+      })
+      .catch(err => {
+        commit('setPostErrors', err.response.data.error)
+        console.log(err.response)
       })
   },
 
