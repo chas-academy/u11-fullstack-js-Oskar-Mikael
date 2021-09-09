@@ -64,7 +64,7 @@ export const login = async (req, res) => {
     }, process.env.JWT_SECRET)
     return res.status(200).json({ message: user, token, });
   }
-  return res.status(404).json({ message: 'Invalid password credentials' });
+  return res.status(404).json({ message: 'Invalid login credentials' });
 };
 
 export const logout = async (req, res) => {

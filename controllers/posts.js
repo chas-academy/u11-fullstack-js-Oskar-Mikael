@@ -60,6 +60,18 @@ export const createPost = async (req, res) => {
 
   const newPost = new Post(post);
 
+  if (!post.title) {
+    return res.status(409).json({ error: { type: 'title', message: 'Title is required' } })
+  }
+
+  if (!post.body) {
+    return res.status(409).json({ error: { type: 'body', message: 'Body is required' } })
+  }
+
+  if (!post.category) {
+    return res.status(409).json({ error: { type: 'category', message: 'Category is required' } })
+  }
+
   try {
     await newPost.save();
     res.status(201).json({ message: newPost });
@@ -91,6 +103,14 @@ export const updatePost = async (req, res) => {
   const _id = post._id;
 
   const { title, body } = req.body;
+
+  if (!title) {
+    return res.status(409).json({ error: { type: 'title', message: 'Title is required' } })
+  }
+
+  if (!body) {
+    return res.status(409).json({ error: { type: 'body', message: 'Body is required' } })
+  }
 
   if (post.creator.message._id === userId || userProfile.isAdmin) {
     try {
