@@ -32,7 +32,7 @@
             <p>
               Country
             </p>
-            <select name="country">
+            <select name="country" v-model="form.country">
               <option hidden value=''>
                 -Select Country-
               </option>
@@ -50,8 +50,11 @@
 
 <script>
 import axios from 'axios'
+import { mapGetters } from 'vuex'
 export default {
   name: 'Register',
+
+  computed: mapGetters(['StateUser']),
 
   mounted () {
     this.getCountries()
@@ -63,7 +66,8 @@ export default {
         username: '',
         email: '',
         password: '',
-        bio: ''
+        bio: '',
+        country: ''
       },
       errors: '',
       countries: ''
@@ -88,11 +92,13 @@ export default {
 
     getCountries () {
       delete axios.defaults.headers.common.authorization
+      delete axios.defaults.headers.common.isadmin
       axios.get('https://restcountries.eu/rest/v2/all')
         .then(res => {
           console.log(res)
           this.countries = res.data
           axios.defaults.headers.common.authorization = localStorage.getItem('token')
+          axios.defaults.headers.common.isadmin = this.StateUser.message.isAdmin
         })
     }
   }

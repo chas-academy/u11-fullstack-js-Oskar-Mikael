@@ -18,21 +18,21 @@
             Coding
           </option>
         </select>
-        <p v-if="this.postErrors.type === 'category'">
+        <p v-if="this.postErrors && this.postErrors.type === 'category'">
             {{ this.postErrors.message }}
           </p>
           <p>
               Title
           </p>
           <input type="text" v-model="form.title">
-          <p v-if="this.postErrors.type === 'title'">
+          <p v-if="this.postErrors && this.postErrors.type === 'title'">
             {{ this.postErrors.message }}
           </p>
           <p>
               Body
           </p>
           <input type="text" v-model="form.body">
-          <p v-if="this.postErrors.type === 'body'">
+          <p v-if="this.postErrors && this.postErrors.type === 'body'">
             {{ this.postErrors.message }}
           </p>
           <button type="submit">Create Post</button>

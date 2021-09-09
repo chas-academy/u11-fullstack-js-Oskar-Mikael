@@ -1,4 +1,5 @@
 import User from '../models/user.js';
+import Post from '../models/post.js';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -73,8 +74,7 @@ export const logout = async (req, res) => {
 export const getUsers = async (req, res) => {
   try {
     const users = await User.find();
-    console.log(users);
-    res.status(200).json(users);
+    res.status(200).json({ message: users });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -149,5 +149,34 @@ export const setPrivateFalse = async (req, res) => {
   } catch (error) {
     console.log(error)
     res.status(400).json({ message: 'There was an error' })
+  }
+}
+
+export const deleteUser = async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  const userId = user._id
+
+  const token = req.headers.authorization;
+
+  const currentUser = jwt.verify(token, process.env.JWT_SECRET)
+
+  const currentUserId = currentUser.id;
+
+  const currentUserProfile = await User.findById(currentUserId)
+
+  const userPosts = await Post.find({ "creator.message._id": userId.toString() })
+
+  const userPostsIds = userPosts.map(post => post._id)
+
+  if (!currentUserProfile.isAdmin) {
+    return res.status(401).json({ message: 'You are not authorized' })
+  }
+  try {
+    await user.deleteOne({ userId })
+    await Post.deleteMany({ _id: userPostsIds })
+    res.status(200).json({ userPosts })
+  } catch (error) {
+    res.status(400).json({ error: error.message })
   }
 }
