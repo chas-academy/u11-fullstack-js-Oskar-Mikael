@@ -2,6 +2,7 @@ import Post from '../models/post.js';
 import User from '../models/user.js';
 import Comment from '../models/comment.js';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 
 export const getPosts = async (req, res) => {
   try {
@@ -243,7 +244,7 @@ export const editComment = async (req, res) => {
         {
           arrayFilters: [
             {
-              "elem._id": id.id
+              "elem": mongoose.Types.ObjectId(id.id)
             }
           ]
         }
