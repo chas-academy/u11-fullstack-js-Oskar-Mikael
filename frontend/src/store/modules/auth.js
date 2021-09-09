@@ -20,6 +20,7 @@ const getters = {
 }
 const actions = {
   LogIn ({ commit }, form) {
+    commit('loadingTrue')
     axios.post('users/login', form)
       .then(res => {
         commit('setUser', res.data)
@@ -30,10 +31,12 @@ const actions = {
         router.push('/my-profile')
         axios.defaults.headers.common.authorization = localStorage.getItem('token')
         axios.defaults.headers.common.isadmin = res.data.message.isAdmin
+        commit('loadingFalse')
       })
       .catch(err => {
         commit('setErrors', err.response.data.message)
         console.log(err.response.data)
+        commit('loadingFalse')
       })
   },
 
@@ -46,11 +49,13 @@ const actions = {
   },
 
   getUser ({ commit }, id) {
+    commit('loadingTrue')
     axios.get('/users/' + id)
       .then(res => {
         console.log(res)
         commit('setSelectedUser', res.data)
         router.push('/profile/' + id)
+        commit('loadingFalse')
       })
   }
 }

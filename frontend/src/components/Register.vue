@@ -50,6 +50,7 @@
 
 <script>
 import axios from 'axios'
+import { mapMutations } from 'vuex'
 export default {
   name: 'Register',
 
@@ -71,18 +72,22 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['loadingTrue', 'loadingFalse']),
+
     register () {
-      axios
-        .post('/users/register', this.form)
+      this.loadingTrue()
+      axios.post('/users/register', this.form)
         .then((res) => {
           console.log(res)
           if (res.status === 201) {
             this.$router.push('/login')
           }
+          this.loadingFalse()
         })
         .catch((err) => {
           this.errors = err.response.data.error
           console.log(err.response)
+          this.loadingFalse()
         })
     },
 

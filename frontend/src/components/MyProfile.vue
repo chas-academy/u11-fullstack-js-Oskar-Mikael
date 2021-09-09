@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import axios from 'axios'
 export default {
   name: 'MyProfile',
@@ -55,24 +55,30 @@ export default {
 
   methods: {
     ...mapActions(['navigateToPost']),
+    ...mapMutations(['loadingTrue', 'loadingFalse']),
 
     updatePassword () {
+      this.loadingTrue()
       axios.patch('/users/change-password', this.form)
         .then(res => {
           console.log(res)
           alert(res.data.message)
+          this.loadingFalse()
         })
         .catch(err => {
           console.log(err)
           alert(err.response.data.message)
+          this.loadingFalse()
         })
     },
 
     getUserPosts () {
+      this.loadingTrue()
       axios.get('/posts/user/' + this.StateUser.message._id)
         .then(res => {
           this.posts = res.data.message
           console.log(res)
+          this.loadingFalse()
         })
     },
 
@@ -81,10 +87,12 @@ export default {
     },
 
     getUser () {
+      this.loadingTrue()
       axios.get('/users/' + this.StateUser.message._id)
         .then(res => {
           this.$store.commit('setUser', res.data)
           console.log(res)
+          this.loadingFalse()
         })
     },
 

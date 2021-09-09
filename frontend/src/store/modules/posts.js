@@ -20,44 +20,52 @@ const actions = {
   },
 
   fetchCategoryPosts ({ commit }, category) {
+    commit('loadingTrue')
     axios.get('posts/category?category=' + category)
       .then(res => {
         commit('setPosts', res.data.posts)
         commit('setPostErrors', null)
         router.push('/posts')
         console.log(res)
+        commit('loadingFalse')
       })
       .catch(err => {
         commit('setPosts', '')
         commit('setPostErrors', err.response.data.message)
         router.push('/posts')
         console.log(err)
+        commit('loadingFalse')
       })
   },
 
   searchPosts ({ commit }, form) {
+    commit('loadingTrue')
     axios.get('posts/search?category=' + form.selectedCategory + '&title=' + form.searchTitle)
       .then(res => {
         commit('setPosts', res.data.posts)
         commit('setPostErrors', null)
         router.push('/posts')
         console.log(res)
+        commit('loadingFalse')
       })
       .catch(err => {
         commit('setPosts', '')
         commit('setPostErrors', err.response.data.message)
         router.push('/posts')
         console.log(err)
+        commit('loadingFalse')
       })
   },
 
   createPost ({ commit }, form) {
+    commit('loadingTrue')
     axios.post('posts', form)
       .then(res => {
         console.log(res)
         commit('setSelectedPost', res.data)
         commit('setPostErrors', null)
         router.push('/posts/' + res.data.message._id)
+        commit('loadingFalse')
       })
       .catch(err => {
         commit('setPostErrors', err.response.data.error)
@@ -66,18 +74,22 @@ const actions = {
   },
 
   navigateToPost ({ commit }, id) {
+    commit('loadingTrue')
     axios.get('/posts/' + id)
       .then(res => {
         commit('setSelectedPost', res.data)
         router.push('/posts/' + id)
+        commit('loadingFalse')
       })
   },
 
   navigateToEditPost ({ commit }, id) {
+    commit('loadingTrue')
     axios.get('/posts/' + id)
       .then(res => {
         commit('setSelectedPost', res.data)
         router.push('/edit-post/' + id)
+        commit('loadingFalse')
       })
   }
 }

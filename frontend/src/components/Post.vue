@@ -42,17 +42,12 @@
       <h3>
         Comments
       </h3>
-      <div v-for="comment in this.selectedPost.message.comments" :key="comment.id">
-        <p>
-          {{ comment.message }}
-        </p>
-        <p>
-          By {{ comment.creator.username }}
-        </p>
-        <p v-if="comment.creator._id === _self.StateUser.message._id || _self.StateUser.message.isAdmin" @click="deleteComment(comment._id)">
-          Delete Comment
-        </p>
-      </div>
+      <comment
+      v-for="comment in this.selectedPost.message.comments"
+      :key="comment._id"
+      :comment="comment"
+      @on-update="updateComment"
+      />
   </div>
 </template>
 
@@ -60,8 +55,11 @@
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 import axios from 'axios'
 import router from '../helpers/router.js'
+import Comment from './Comment.vue'
 export default {
   name: 'Post',
+
+  components: { Comment },
 
   computed: mapGetters(['selectedPost', 'StateUser', 'isAuthenticated']),
 
@@ -82,7 +80,7 @@ export default {
 
   methods: {
     ...mapActions(['getUser', 'navigateToEditPost']),
-    ...mapMutations(['setSelectedPost', 'setUser']),
+    ...mapMutations(['setSelectedPost', 'setUser', 'loadingTrue', 'loadingFalse']),
 
     clickUser () {
       this.getUser(this.selectedPost.message.creator.message._id)
@@ -94,19 +92,23 @@ export default {
 
     deletePost (id) {
       if (confirm('Are you sure you want to delete this post?')) {
+        this.loadingTrue()
         axios.delete('/posts/' + this.selectedPost.message._id, id)
           .then(res => {
             router.push('/posts')
             console.log(res)
+            this.loadingFalse()
           })
       }
     },
 
     getPost () {
+      this.loadingTrue()
       axios.get('/posts/' + this.$route.params.id)
         .then(res => {
           this.setSelectedPost(res.data)
           console.log(res.data)
+          this.loadingFalse()
         })
     },
 
@@ -123,21 +125,11 @@ export default {
         })
     },
 
-    deleteComment (id) {
-      if (confirm('Are you sure you want to delete this comment?')) {
-        axios.patch('/posts/comment/' + this.selectedPost.message._id, { id: id })
-          .then(res => {
-            console.log(res)
-            this.getPost()
-          })
-      }
-    },
-
     likePost () {
       axios.patch('/posts/like/' + this.selectedPost.message._id)
         .then(res => {
           console.log(res)
-          this.getUser()
+          this.getCurrentUser()
           this.getPost()
         })
     },
@@ -146,7 +138,7 @@ export default {
       axios.patch('/posts/unlike/' + this.selectedPost.message._id)
         .then(res => {
           console.log(res)
-          this.getUser()
+          this.getCurrentUser()
           this.getPost()
         })
     },
@@ -156,6 +148,21 @@ export default {
         .then(res => {
           this.setUser(res.data)
         })
+    },
+
+    updateComment (id, comment) {
+      axios.patch('/posts/edit-comment/' + this.selectedPost.message._id, {
+        id: id
+      })
+        .then(res => {
+          console.log(res)
+          this.edit = ''
+          this.getPost()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      console.log(id)
     }
   }
 }

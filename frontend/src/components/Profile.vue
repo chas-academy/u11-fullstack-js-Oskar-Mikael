@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import axios from 'axios'
 export default {
   name: 'Profile',
@@ -40,12 +40,15 @@ export default {
 
   methods: {
     ...mapActions(['navigateToPost']),
+    ...mapMutations(['loadingTrue', 'loadingFalse']),
 
     getUser () {
+      this.loadingTrue()
       axios.get('posts/user/' + this.SelectedUser.message._id)
         .then(res => {
           this.userPosts = res.data.message
           console.log(res)
+          this.loadingFalse()
         })
     },
 
