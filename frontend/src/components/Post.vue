@@ -157,6 +157,7 @@ export default {
         .then(res => {
           console.log(res)
           this.edit = ''
+          this.getPost()
         })
         .catch(err => {
           console.log(err)

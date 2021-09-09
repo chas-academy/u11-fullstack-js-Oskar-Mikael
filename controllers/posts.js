@@ -244,7 +244,7 @@ export const editComment = async (req, res) => {
         {
           arrayFilters: [
             {
-              "elem": mongoose.Types.ObjectId(id.id)
+              "elem._id": mongoose.Types.ObjectId(id.id)
             }
           ]
         }
