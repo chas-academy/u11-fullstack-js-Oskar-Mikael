@@ -27,7 +27,6 @@
 import axios from 'axios'
 import { mapGetters, mapMutations } from 'vuex'
 import router from '../helpers/router.js'
-import { mapMutations } from 'vuex'
 export default {
   name: 'EditPost',
 
@@ -45,7 +44,6 @@ export default {
 
   methods: {
     ...mapMutations(['loadingTrue', 'loadingFalse', 'setPostErrors']),
-
 
     updatePost () {
       this.loadingTrue()
