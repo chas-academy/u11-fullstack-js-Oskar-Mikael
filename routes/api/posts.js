@@ -1,5 +1,5 @@
 import express from 'express';
-import { getPosts, createPost, getPost, updatePost, deletePost, addComment, deleteComment, likePost, unlikePost, getPostsByCategory, searchPosts, getUsersPosts } from '../../controllers/posts.js';
+import { getPosts, createPost, getPost, updatePost, deletePost, addComment, deleteComment, likePost, unlikePost, getPostsByCategory, searchPosts, getUsersPosts, editComment } from '../../controllers/posts.js';
 import requireAuth from '../../middleware/authMiddleware.js';
 
 const router = express.Router();
@@ -11,6 +11,7 @@ router.get('/search', searchPosts);
 router.get('/:id', getPost);
 router.post('/', requireAuth, createPost);
 router.post('/comment', requireAuth, addComment);
+router.patch('/edit-comment/:id', editComment);
 router.patch('/:id', requireAuth, updatePost);
 router.patch('/like/:id', likePost);
 router.patch('/unlike/:id', unlikePost);

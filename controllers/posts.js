@@ -2,6 +2,7 @@ import Post from '../models/post.js';
 import User from '../models/user.js';
 import Comment from '../models/comment.js';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 
 export const getPosts = async (req, res) => {
   try {
@@ -230,6 +231,52 @@ export const deleteComment = async (req, res) => {
     res.status(403).json({ error: 'You are not authorized' });
   }
 };
+
+export const editComment = async (req, res) => {
+  const { id } = req.body;
+
+  const token = req.headers.authorization;
+
+  const user = jwt.verify(token, process.env.JWT_SECRET);
+
+  const userProfile = await User.findById(user.id);
+
+  const post = await Post.findById(req.params.id);
+
+  const _id = post.id;
+
+  const postComments = post.comments.map((comment) => comment._id);
+
+  const commentIndex = postComments.indexOf(id.id);
+
+  if (
+    post.comments[commentIndex].creator._id == user.id ||
+    userProfile.isAdmin
+  ) {
+    try {
+      await Post.findOneAndUpdate(
+        { _id: _id },
+        {
+          $set: {
+            "comments.$[elem].message": id.comment
+          }
+        },
+        {
+          arrayFilters: [
+            {
+              "elem._id": mongoose.Types.ObjectId(id.id)
+            }
+          ]
+        }
+      );
+      res.status(200).json({ message: post });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  } else {
+    res.status(403).json({ error: 'You are not authorized' });
+  }
+}
 
 export const likePost = async (req, res) => {
   const { id } = req.params;

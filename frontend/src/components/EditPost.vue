@@ -43,18 +43,20 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['setPostErrors']),
+    ...mapMutations(['loadingTrue', 'loadingFalse', 'setPostErrors']),
 
     updatePost () {
+      this.loadingTrue()
       axios.patch('/posts/' + this.$store.getters.selectedPost.message._id, this.form)
         .then(res => {
           alert('Post edited successfully')
           this.editPostErrors = ''
           router.back()
+          this.loadingFalse()
         })
         .catch(err => {
-          this.editPostErrors = ''
-          console.log(err.response)
+          console.log(err.message)
+          this.loadingFalse()
           this.editPostErrors = err.response.data.error
         })
     }

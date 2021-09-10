@@ -17,12 +17,6 @@
             </option>
           </select>
         </form>
-        <!-- <p v-for="post in allPosts" :key="post._id" @click="postNavigate(post._id)">
-            {{ post.title }}
-        </p>
-        <p v-if="this.postErrors">
-          {{ this.postErrors }}
-        </p> -->
         <p>
           <router-link to="/create-post">
           Create Post
