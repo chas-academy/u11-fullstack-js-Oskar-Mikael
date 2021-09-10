@@ -10,27 +10,65 @@
         <p>
           Total amount of posts: {{ allPosts.length }}
         </p>
-        <p @click="navigatePost(post._id)" v-for="post in allPosts" :key="post._id">
-            {{ post.title }}
-            {{ post.category }}
-        </p>
+        <table>
+          <tr>
+            <th>
+              Title
+            </th>
+            <th>
+              Category
+            </th>
+            <th>
+              Creator
+            </th>
+            <th>
+              Created At
+            </th>
+          </tr>
+          <tr v-for="post in allPosts" :key="post._id">
+            <td @click="navigatePost(post._id)">
+              {{ post.title }}
+            </td>
+            <td>
+              {{ post.category }}
+            </td>
+            <td>
+              {{ post.creator.message.username }}
+            </td>
+            <td>
+              {{ post.createdAt }}
+            </td>
+          </tr>
+        </table>
     </div>
     <div>
       <h3>
       All Users
       </h3>
-      <div v-for="user in allUsers" :key="user._id">
-        <p @click="clickUser(user._id)">
-        {{ user.username }}
-        </p>
-        <p>
+      <table>
+        <tr>
+          <th>
+            Username
+          </th>
+          <th>
+            Email
+          </th>
+        </tr>
+        <tr v-for="user in allUsers" :key="user._id">
+        <td @click="clickUser(user._id)">
+          {{ user.username }}
+        </td>
+        <td>
+          {{ user.email }}
+        </td>
+        <td @click="editUser(user._id)">
           Edit
-        </p>
-        <p @click="deleteUser(user._id, user.username)">
+        </td>
+        <td @click="deleteUser(user._id, user.username)">
           Delete
-        </p>
-        <hr>
-      </div>
+        </td>
+        </tr>
+      </table>
     </div>
     <div>
         <h3>
@@ -83,7 +121,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import axios from 'axios'
 export default {
   name: 'Admin',
@@ -109,12 +147,14 @@ export default {
     }
   },
 
-  computed: mapGetters(['allPosts', 'StateUser']),
+  computed: mapGetters(['allPosts', 'StateUser', 'isLoading']),
 
   methods: {
     ...mapActions(['fetchPosts', 'navigateToPost', 'getUser']),
+    ...mapMutations(['setSelectedUser', 'loadingTrue', 'loadingFalse']),
 
     register () {
+      this.loadingTrue()
       axios
         .post('/users/register', this.form)
         .then((res) => {
@@ -130,10 +170,22 @@ export default {
             bio: '',
             country: ''
           }
+          this.loadingFalse()
         })
         .catch((err) => {
           this.errors = err.response.data.error
           console.log(err.response)
+          this.loadingFalse()
+        })
+    },
+
+    editUser (id) {
+      this.loadingTrue()
+      axios.get('users/' + id)
+        .then(res => {
+          this.setSelectedUser(res.data.message)
+          this.$router.push('/edit-user')
+          this.loadingFalse()
         })
     },
 
@@ -142,10 +194,12 @@ export default {
     },
 
     getUsers () {
+      this.loadingTrue()
       axios.get('users/allusers')
         .then(res => {
           this.allUsers = res.data.message
           console.log(res)
+          this.loadingFalse()
         })
     },
 
@@ -167,11 +221,13 @@ export default {
 
     deleteUser (id, username) {
       if (prompt('Write ' + username + ' to delete the user. This is an irreversible action') === username) {
+        this.loadingTrue()
         axios.delete('users/delete-user/' + id)
           .then(res => {
             console.log(res)
             this.getUsers()
             alert('User Deleted')
+            this.loadingFalse()
           })
       } else {
         alert('Username was incorrectly written')
