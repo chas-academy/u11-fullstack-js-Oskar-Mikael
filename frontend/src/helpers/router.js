@@ -12,6 +12,7 @@ import CreatePost from '../components/CreatePost.vue'
 import EditPost from '../components/EditPost.vue'
 import Post from '../components/Post.vue'
 import Categories from '../components/Categories.vue'
+import EditUser from '../components/EditUser.vue'
 import store from '../store'
 
 Vue.use(Router)
@@ -32,7 +33,8 @@ const router = new Router({
     { path: '/edit-post/:id', component: EditPost, meta: { isProtected: true } },
     { path: '/posts/:id', component: Post },
     { path: '/register', component: Register },
-    { path: '/admin', name: 'admin', component: Admin, meta: { isProtected: true } },
+    { path: '/edit-user', name: 'edituser', component: EditUser, meta: { isProtected: true, adminProtected: true } },
+    { path: '/admin', name: 'admin', component: Admin, meta: { isProtected: true, adminProtected: true } },
 
     { path: '*', component: Home }
   ]
@@ -49,7 +51,7 @@ router.beforeEach((to, from, next) => {
     next({
       path: '/login'
     })
-  } else if (to.name === 'admin' && !user.message.isAdmin) {
+  } else if (to.meta.adminProtected && !user.message.isAdmin) {
     next({
       path: '/'
     })

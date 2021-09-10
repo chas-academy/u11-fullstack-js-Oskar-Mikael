@@ -24,7 +24,7 @@ const actions = {
     axios.get('posts/category?category=' + category)
       .then(res => {
         commit('setPosts', res.data.posts)
-        commit('setPostErrors', null)
+        commit('setPostErrors', '')
         router.push('/posts')
         console.log(res)
         commit('loadingFalse')
@@ -43,7 +43,7 @@ const actions = {
     axios.get('posts/search?category=' + form.selectedCategory + '&title=' + form.searchTitle)
       .then(res => {
         commit('setPosts', res.data.posts)
-        commit('setPostErrors', null)
+        commit('setPostErrors', '')
         router.push('/posts')
         console.log(res)
         commit('loadingFalse')
@@ -63,7 +63,7 @@ const actions = {
       .then(res => {
         console.log(res)
         commit('setSelectedPost', res.data)
-        commit('setPostErrors', null)
+        commit('setPostErrors', '')
         router.push('/posts/' + res.data.message._id)
         commit('loadingFalse')
       })

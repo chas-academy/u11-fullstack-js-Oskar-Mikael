@@ -1,9 +1,9 @@
 <template>
     <div>
         <h2>
-            Register
+            Update User
         </h2>
-        <form method="post" @submit.prevent="register">
+        <form method="post" @submit.prevent="updateUser(_self.SelectedUser._id)">
             <p>
                 Username
             </p>
@@ -33,8 +33,8 @@
               Country
             </p>
             <select name="country" v-model="form.country">
-              <option hidden value=''>
-                -Select Country-
+              <option selected>
+                {{ form.country }}
               </option>
               <option v-for="country in countries" :key="country.id">
                 {{ country.name }}
@@ -43,18 +43,18 @@
             <p class="errors" v-if="errors.type == 'country'">
                 {{ errors.message }}
             </p>
-            <button type="submit">Register</button>
+            <button type="submit">Update User</button>
         </form>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
-  name: 'Register',
+  name: 'EditUser',
 
-  computed: mapGetters(['StateUser']),
+  computed: mapGetters(['StateUser', 'SelectedUser']),
 
   mounted () {
     this.getCountries()
@@ -63,11 +63,11 @@ export default {
   data () {
     return {
       form: {
-        username: '',
-        email: '',
+        username: this.$store.getters.SelectedUser.username,
+        email: this.$store.getters.SelectedUser.email,
         password: '',
-        bio: '',
-        country: ''
+        bio: this.$store.getters.SelectedUser.bio,
+        country: this.$store.getters.SelectedUser.country
       },
       errors: '',
       countries: ''
@@ -75,22 +75,12 @@ export default {
   },
 
   methods: {
-    ...mapMutations(['loadingTrue', 'loadingFalse']),
-
-    register () {
-      this.loadingTrue()
-      axios.post('/users/register', this.form)
-        .then((res) => {
+    updateUser (id) {
+      axios.patch('users/edit-user/' + id, this.form)
+        .then(res => {
           console.log(res)
-          if (res.status === 201) {
-            this.$router.push('/login')
-          }
-          this.loadingFalse()
-        })
-        .catch((err) => {
-          this.errors = err.response.data.error
-          console.log(err.response)
-          this.loadingFalse()
+          alert('User Updated')
+          this.$router.back()
         })
     },
 
