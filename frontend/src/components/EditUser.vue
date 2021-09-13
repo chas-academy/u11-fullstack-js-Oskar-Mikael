@@ -19,13 +19,6 @@
                 {{ errors.message }}
             </p>
             <p>
-                Password
-            </p>
-            <input type="password" name="password" v-model="form.password"/>
-             <p class="errors" v-if="errors.type == 'password'">
-                {{ errors.message }}
-            </p>
-            <p>
                 Bio
             </p>
             <input type="text" name="bio" v-model="form.bio"/>
@@ -65,7 +58,6 @@ export default {
       form: {
         username: this.$store.getters.SelectedUser.username,
         email: this.$store.getters.SelectedUser.email,
-        password: '',
         bio: this.$store.getters.SelectedUser.bio,
         country: this.$store.getters.SelectedUser.country
       },
