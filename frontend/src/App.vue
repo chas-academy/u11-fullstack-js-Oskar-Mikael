@@ -1,6 +1,6 @@
 <template>
-  <div id="app">
-    <nav class="navbar w-full flex justify-between bg-gray-300 absolute top-0 right-0">
+  <div class="text-white" id="app">
+    <nav class="text-black navbar w-full flex justify-between bg-gray-300 absolute top-0 right-0">
        <p class="text-2xl my-auto ml-4">
       <router-link to="/">Bo Forums</router-link>
     </p>
@@ -74,6 +74,10 @@ export default {
  .navbar > ul > li {
    padding: 0.5rem;
    margin: 1rem;
+ }
+
+ input {
+   outline: none;
  }
 
    @import './assets/css/loading.css';
