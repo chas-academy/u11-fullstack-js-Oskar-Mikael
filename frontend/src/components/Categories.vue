@@ -1,11 +1,13 @@
 <template>
-    <div>
-        Categories
-        <p>
+    <div class="text-center">
+        <h2 class="text-xl mb-6">
           Category
-        </p>
+        </h2>
         <form @change="selectCategory">
-          <select v-model="selectedCategory">
+          <select class="text-black w-1/6 h-8" v-model="selectedCategory">
+          <option hidden value="">
+            -Select Category-
+          </option>
             <option>
               Family
             </option>
@@ -17,11 +19,7 @@
             </option>
           </select>
         </form>
-        <p>
-          <router-link to="/create-post">
-          Create Post
-          </router-link>
-        </p>
+        <hr class="my-14">
         <Search />
     </div>
 </template>

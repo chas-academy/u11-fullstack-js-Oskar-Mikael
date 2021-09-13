@@ -1,27 +1,34 @@
 <template>
-  <div>
+  <div class="w-4/5 comment">
+    <p @click="clickUser(comment.creator._id)" class="font-bold underline hover:no-underline cursor-pointer w-1/6">
+      {{ comment.creator.username }}
+    </p>
+    <p class="ml-2 mt-2">
     {{ comment.message }}
-
-    <p @click='onClickEdit'>Edit comment</p>
-
+    </p>
     <form v-if='editing' @submit.prevent='editComment'>
-      <input type='text' v-model='updatedCommentMessage' />
+      <input class="w-1/4 h-8 rounded-md text-black pl-2" type='text' v-model='updatedCommentMessage' />
 
-      <button type='submit'>Edit Comment</button>
+      <button class="ml-2 bg-blue-500 py-1 px-2 rounded-md" type='submit'>Save</button>
     </form>
-    <p @click="deleteComment(comment._id)">
+        <i v-if="this.StateUser.message._id === comment.creator._id" @click="commentOptions = !commentOptions" class="fa fa-ellipsis-v float-right cursor-pointer"></i>
+        <div v-if="commentOptions" class="bg-gray-400 float-right mr-2 text-black text-center">
+          <p v-if="this.StateUser.message._id === comment.creator._id" class="hover:bg-gray-300 cursor-pointer" @click='onClickEdit'>Edit comment</p>
+          <p v-if="this.StateUser.message._id === comment.creator._id" class="hover:bg-gray-300 cursor-pointer" @click="deleteComment(comment._id)">
           Delete Comment
         </p>
+        </div>
+        <hr class="mt-6">
   </div>
 </template>
 
 <script>
 import axios from 'axios'
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapMutations, mapActions } from 'vuex'
 export default {
   name: 'Comment',
 
-  computed: mapGetters(['selectedPost']),
+  computed: mapGetters(['selectedPost', 'StateUser']),
 
   props: {
     comment: {
@@ -29,15 +36,29 @@ export default {
     }
   },
 
+  mounted () {
+    document.addEventListener('click', this.documentClick())
+  },
+
   data () {
     return {
       editing: false,
-      updatedCommentMessage: ''
+      updatedCommentMessage: '',
+      commentOptions: false
     }
   },
 
   methods: {
     ...mapMutations(['setSelectedPost']),
+    ...mapActions(['getUser']),
+
+    documentClick () {
+      this.commentOptions = false
+    },
+
+    clickUser (id) {
+      this.getUser(id)
+    },
 
     onClickEdit () {
       this.editing = true

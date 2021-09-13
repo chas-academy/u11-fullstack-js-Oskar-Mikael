@@ -11,7 +11,12 @@
         <li class="bg-blue-400 rounded-md" v-if="!this.isAuthenticated">
           <router-link to="/login">Join Now!</router-link>
         </li>
-        <li v-if="this.isAuthenticated">
+        <li class="bg-green-400 rounded-md" v-if="this.isAuthenticated">
+          <router-link to="/create-post">
+          Create Post
+          </router-link>
+        </li>
+        <li class="bg-blue-400 rounded-md" v-if="this.isAuthenticated">
           <router-link to="/my-profile">Profile</router-link>
         </li>
         <li class="bg-yellow-300 rounded-md" v-if="this.isAuthenticated && this.StateUser.message.isAdmin">
@@ -25,7 +30,7 @@
     <div class="md:hidden block">
       <i @click="toggleBurger" :class="{ 'active' : isBurgerActive }" class="fa fa-bars absolute top-5 right-5 text-3xl"></i>
     </div>
-    <div class="container mx-auto mt-24">
+    <div class="container md:mx-auto my-24 mx-4">
       <router-view/>
     </div>
     <Loading />
