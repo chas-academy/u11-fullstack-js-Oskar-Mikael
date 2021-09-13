@@ -153,7 +153,7 @@ export const setPrivateFalse = async (req, res) => {
 }
 
 export const updateUser = async (req, res) => {
-  const { username, email, password: plainTextPassword, bio, country } = req.body
+  const { username, email, bio, country } = req.body
 
   const token = req.headers.authorization;
 
@@ -161,17 +161,12 @@ export const updateUser = async (req, res) => {
 
   const currentUserProfile = await User.findById(currentUser.id);
 
-  if (plainTextPassword && plainTextPassword.length < 8) {
-    return res.status(400).json({ error: { type: 'password', message: 'Password need atleast 8 characters' } });
-  }
-
   const user = await User.findById(req.params.id);
 
   const _id = user._id
 
   if (currentUserProfile.isAdmin) {
     try {
-      const password = await bcrypt.hash(plainTextPassword, 10)
       await User.updateOne(
         { _id },
         {
@@ -179,7 +174,6 @@ export const updateUser = async (req, res) => {
           {
             username,
             email,
-            password,
             bio,
             country
           }
@@ -187,7 +181,7 @@ export const updateUser = async (req, res) => {
       )
       res.status(200).json({ message: user })
     } catch (error) {
-
+      res.status(401).json({ error: 'You are not authorized' })
     }
   }
 }
