@@ -85,6 +85,11 @@ export default {
    outline: none;
  }
 
+ textarea {
+   outline: none;
+   resize: none!important;
+ }
+
    @import './assets/css/loading.css';
    @import './assets/css/tailwind.css';
 </style>
