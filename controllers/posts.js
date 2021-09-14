@@ -128,7 +128,7 @@ export const updatePost = async (req, res) => {
       res.status(400).json({ message: error.message });
     }
   } else {
-    res.status(403).json({ message: 'You are not authorized' });
+    res.status(401).json({ message: 'You are not authorized' });
   }
 };
 
@@ -153,7 +153,7 @@ export const deletePost = async (req, res) => {
       res.status(400).json({ message: error.message });
     }
   } else {
-    res.status(403).json({ message: 'You are not authorized' });
+    res.status(401).json({ message: 'You are not authorized' });
   }
 };
 
@@ -228,7 +228,7 @@ export const deleteComment = async (req, res) => {
       res.status(400).json({ error: error.message });
     }
   } else {
-    res.status(403).json({ error: 'You are not authorized' });
+    res.status(401).json({ error: 'You are not authorized' });
   }
 };
 
@@ -274,7 +274,7 @@ export const editComment = async (req, res) => {
       res.status(400).json({ error: error.message });
     }
   } else {
-    res.status(403).json({ error: 'You are not authorized' });
+    res.status(401).json({ error: 'You are not authorized' });
   }
 }
 
