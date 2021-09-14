@@ -26,7 +26,7 @@
           <span class="cursor-pointer mr-4 text-black bg-blue-400 py-1 px-2 rounded-sm" @click="postNavigate"> Edit post </span>
           <span class="cursor-pointer text-black bg-red-400 py-1 px-2 rounded-sm" @click="deletePost"> Delete post </span>
       </p>
-      <h3 class="text-2xl mb-10">
+      <h3 class="text-2xl my-10">
         {{ this.selectedPost.message.comments.length }} Comments
       </h3>
       <div v-if="this.isAuthenticated" class="mt-20">
