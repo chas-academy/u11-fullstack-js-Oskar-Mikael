@@ -13,7 +13,7 @@ const requireAuth = (req, res, next) => {
             }
         })
     } else {
-        res.status(403).json({ error: 'You are not authorized' })
+        res.status(401).json({ error: 'You are not authorized' })
     }
 }
 

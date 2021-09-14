@@ -68,7 +68,7 @@ export default {
 
   methods: {
     updateUser (id) {
-      axios.patch('users/edit-user/' + id, this.form)
+      axios.patch('users/admin-edit-user/' + id, this.form)
         .then(res => {
           console.log(res)
           alert('User Updated')
