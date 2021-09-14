@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h1>
+    <h1 class="text-3xl mb-10">
       Admin Panel
     </h1>
       <div>
-        <h3>
+        <h3 class="text-xl">
         All Posts
         </h3>
-        <p>
+        <p class="mb-6">
           Total amount of posts: {{ allPosts.length }}
         </p>
-        <table>
+        <table class="text-center mb-10">
           <tr>
             <th>
               Title
@@ -26,7 +26,7 @@
             </th>
           </tr>
           <tr v-for="post in allPosts" :key="post._id">
-            <td @click="navigatePost(post._id)">
+            <td class="underline hover:no-underline cursor-pointer" @click="navigatePost(post._id)">
               {{ post.title }}
             </td>
             <td>
@@ -42,10 +42,13 @@
         </table>
     </div>
     <div>
-      <h3>
+      <h3 class="text-xl">
       All Users
       </h3>
-      <table>
+      <p class="mb-6">
+        Total amount of users: {{ allUsers.length }}
+      </p>
+      <table class="text-center mb-10">
         <tr>
           <th>
             Username
@@ -55,66 +58,51 @@
           </th>
         </tr>
         <tr v-for="user in allUsers" :key="user._id">
-        <td @click="clickUser(user._id)">
+        <td class="underline hover:no-underline cursor-pointer" @click="clickUser(user._id)">
           {{ user.username }}
         </td>
         <td>
           {{ user.email }}
         </td>
-        <td @click="editUser(user._id)">
+        <td class="bg-blue-600 cursor-pointer" @click="editUser(user._id)">
           Edit
         </td>
-        <td @click="deleteUser(user._id, user.username)">
+        <td class="bg-red-600 cursor-pointer" @click="deleteUser(user._id, user.username)">
           Delete
         </td>
         </tr>
       </table>
     </div>
     <div>
-        <h3>
+        <h3 class="text-xl mb-6">
             Register User
         </h3>
         <form method="post" @submit.prevent="register">
-            <p>
-                Username
-            </p>
-            <input type="text" name="username" v-model="form.username"/>
-            <p class="errors" v-if="errors.type == 'username'">
+          <input placeholder="Username *" class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="text" name="username" v-model="form.username"/><br>
+            <p class="errors" v-if="errors.type == 'username'"><br>
                 {{ errors.message }}
             </p>
-            <p>
-                Email
-            </p>
-            <input type="email" name="email" v-model="form.email"/>
+            <input placeholder="Email *" class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="email" name="email" v-model="form.email"/><br>
              <p class="errors" v-if="errors.type == 'email'">
                 {{ errors.message }}
             </p>
-            <p>
-                Password
-            </p>
-            <input type="password" name="password" v-model="form.password"/>
+            <input placeholder="Password *" class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="password" name="password" v-model="form.password"/><br>
              <p class="errors" v-if="errors.type == 'password'">
                 {{ errors.message }}
             </p>
-            <p>
-                Bio
-            </p>
-            <input type="text" name="bio" v-model="form.bio"/>
-            <p>
-              Country
-            </p>
-            <select name="country" v-model="form.country">
-              <option hidden value=''>
-                -Select Country-
+            <input placeholder="Bio" class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="text" name="bio" v-model="form.bio"/><br>
+            <select class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" name="country" v-model="form.country">
+              <option hidden value="">
+                -Select Country- *
               </option>
               <option v-for="country in countries" :key="country.id">
                 {{ country.name }}
               </option>
-            </select>
+            </select><br>
             <p class="errors" v-if="errors.type == 'country'">
                 {{ errors.message }}
             </p>
-            <button type="submit">Register</button>
+            <button class="my-6 py-2 px-20 bg-green-600 rounded-md" type="submit">Register</button>
         </form>
     </div>
   </div>
@@ -237,6 +225,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  table > tr {
+    border: 2px solid black
+  }
 
+  table > tr > td {
+    border: 2px solid black;
+    padding: 0.4rem;
+  }
 </style>
