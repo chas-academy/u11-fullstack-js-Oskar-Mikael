@@ -54,8 +54,16 @@ const actions = {
       .then(res => {
         console.log(res)
         commit('setSelectedUser', res.data)
-        router.push('/profile/' + id)
+        if (id === this.getters.StateUser.message._id) {
+          router.push('/my-profile')
+        } else {
+          router.push('/profile/' + id)
+        }
         commit('loadingFalse')
+      })
+      .catch(err => {
+        commit('loadingFalse')
+        console.log(err)
       })
   }
 }
