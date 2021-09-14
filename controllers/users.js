@@ -42,7 +42,7 @@ export const register = async (req, res) => {
     return res.status(201).json(response);
   } catch (error) {
     if (error.code === 11000) {
-      return res.status(403).json({ message: `${error.keyValue[Object.keys(error.keyValue)[0]]} is already in use` })
+      return res.status(401).json({ message: `${error.keyValue[Object.keys(error.keyValue)[0]]} is already in use` })
     }
     return res.status(409).json({ message: error });
   }
@@ -152,7 +152,7 @@ export const setPrivateFalse = async (req, res) => {
   }
 }
 
-export const updateUser = async (req, res) => {
+export const adminUpdateUser = async (req, res) => {
   const { username, email, bio, country } = req.body
 
   const token = req.headers.authorization;
@@ -181,10 +181,45 @@ export const updateUser = async (req, res) => {
       )
       res.status(200).json({ message: user })
     } catch (error) {
-      res.status(401).json({ error: 'You are not authorized' })
+      res.status(401).json({ error: error })
+    }
+  } else {
+    res.status(401).json({ message: _id });
+  }
+}
+
+export const updateUser = async (req, res) => {
+  const { bio, country } = req.body
+
+  const token = req.headers.authorization;
+
+  const currentUser = jwt.verify(token, process.env.JWT_SECRET);
+
+  const user = await User.findById(req.params.id);
+
+  const _id = user._id
+
+  if (currentUser.id != _id) {
+    res.status(401).json({ message: 'You are not authorized' });
+  } else {
+    try {
+      await User.updateOne(
+        { _id },
+        {
+          $set:
+          {
+            bio,
+            country
+          }
+        }
+      )
+      res.status(200).json({ message: user })
+    } catch (error) {
+      res.status(401).json({ error: error })
     }
   }
 }
+
 
 export const deleteUser = async (req, res) => {
   const user = await User.findById(req.params.id)
