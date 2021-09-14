@@ -1,13 +1,13 @@
 <template>
-  <div>
-      <h2>
+  <div class="text-center">
+      <h2 class="text-3xl mb-10">
           Create Post
       </h2>
       <form @submit.prevent="addPost">
-        <p>
-          Category
-        </p>
-        <select v-model="form.category">
+        <select class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md"  v-model="form.category">
+          <option selected value=''>
+            -Select category-
+          </option>
           <option>
             Family
           </option>
@@ -17,25 +17,19 @@
           <option>
             Coding
           </option>
-        </select>
+        </select><br>
         <p v-if="this.postErrors && this.postErrors.type === 'category'">
             {{ this.postErrors.message }}
           </p>
-          <p>
-              Title
-          </p>
-          <input type="text" v-model="form.title">
+          <input placeholder="Title" class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md"  type="text" v-model="form.title"><br>
           <p v-if="this.postErrors && this.postErrors.type === 'title'">
             {{ this.postErrors.message }}
           </p>
-          <p>
-              Body
-          </p>
-          <input type="text" v-model="form.body">
+          <textarea placeholder="Body" class="mb-8 text-black bg-gray-200 pl-2 w-1/2 h-72 rounded-md"  type="text" v-model="form.body"/><br>
           <p v-if="this.postErrors && this.postErrors.type === 'body'">
             {{ this.postErrors.message }}
           </p>
-          <button type="submit">Create Post</button>
+          <button class="my-6 py-2 px-20 bg-green-600 rounded-md" type="submit">Create Post</button>
       </form>
   </div>
 </template>

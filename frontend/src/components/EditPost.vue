@@ -1,24 +1,18 @@
 <template>
-  <div>
-      <h2>
+  <div class="text-center">
+      <h2 class="text-3xl mb-10">
           Edit Post
       </h2>
       <form @submit.prevent="updatePost">
-          <p>
-              Title
-          </p>
-          <input type="text" v-model="form.title">
+          <input placeholder="Title" class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="text" v-model="form.title"><br>
           <p v-if="editPostErrors.type === 'title'">
             {{ this.editPostErrors.message }}
           </p>
-          <p>
-              Body
-          </p>
-          <input type="text" v-model="form.body">
+          <textarea placeholder="Body" class="mb-8 text-black bg-gray-200 pl-2 w-1/2 h-72 rounded-md" type="text" v-model="form.body"/><br>
           <p v-if="editPostErrors.type === 'body'">
             {{ this.editPostErrors.message }}
           </p>
-          <button type="submit">Edit Post</button>
+          <button class="my-6 py-2 px-20 bg-blue-600 rounded-md"  type="submit">Save</button>
       </form>
   </div>
 </template>
