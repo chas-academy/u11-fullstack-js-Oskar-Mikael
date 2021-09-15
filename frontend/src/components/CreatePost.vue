@@ -4,7 +4,7 @@
           Create Post
       </h2>
       <form @submit.prevent="addPost">
-        <select class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md"  v-model="form.category">
+        <select class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md"  v-model="form.category">
           <option selected value=''>
             -Select category-
           </option>
@@ -21,7 +21,7 @@
         <p v-if="this.postErrors && this.postErrors.type === 'category'">
             {{ this.postErrors.message }}
           </p>
-          <input placeholder="Title" class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md"  type="text" v-model="form.title"><br>
+          <input placeholder="Title" class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md"  type="text" v-model="form.title"><br>
           <p v-if="this.postErrors && this.postErrors.type === 'title'">
             {{ this.postErrors.message }}
           </p>

@@ -4,7 +4,7 @@
           Edit Post
       </h2>
       <form @submit.prevent="updatePost">
-          <input placeholder="Title" class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="text" v-model="form.title"><br>
+          <input placeholder="Title" class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" type="text" v-model="form.title"><br>
           <p v-if="editPostErrors.type === 'title'">
             {{ this.editPostErrors.message }}
           </p>
