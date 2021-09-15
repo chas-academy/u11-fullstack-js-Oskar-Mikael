@@ -4,14 +4,17 @@
         <p class="text-2xl mb-1 font-bold">
             {{ post.title }}
         </p>
-        <p class="mb-6" v-if="post.body.length >= 40">
+        <p v-if="post.body.length >= 40">
           {{ post.body.substr(0, 40) + "..." }}
         </p>
-        <p class="mb-6" v-else>
+        <p v-else>
           {{ post.body }}
         </p>
+        <p class="text-sm text-gray-600 mb-6">
+          {{ post.createdAt.slice(0, 10) }}
+        </p>
         <p>
-          By <span @click="clickUser(post.creator.message._id, $event)" class="font-bold underline hover:no-underline"> {{ post.creator.message.username }} </span>
+          By <span @click="clickUser(post.creator.message._id, $event)" class="font-bold text-blue-600 underline hover:no-underline"> {{ post.creator.message.username }} </span>
         </p>
         <p>
           <i class="fa fa-thumbs-up"></i>

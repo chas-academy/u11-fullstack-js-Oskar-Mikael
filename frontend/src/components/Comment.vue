@@ -1,6 +1,6 @@
 <template>
   <div @click="documentClick" class="w-4/5 comment">
-    <p @click="clickUser(comment.creator._id)" class="font-bold underline hover:no-underline cursor-pointer w-1/6">
+    <p @click="clickUser(comment.creator._id)" class="font-bold text-blue-500 underline hover:no-underline cursor-pointer w-1/6">
       {{ comment.creator.username }}
     </p>
     <p class="ml-2 mt-2">
