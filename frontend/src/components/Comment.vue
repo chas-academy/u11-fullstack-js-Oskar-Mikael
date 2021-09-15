@@ -1,5 +1,5 @@
 <template>
-  <div class="w-4/5 comment">
+  <div @click="documentClick" class="w-4/5 comment">
     <p @click="clickUser(comment.creator._id)" class="font-bold underline hover:no-underline cursor-pointer w-1/6">
       {{ comment.creator.username }}
     </p>
@@ -11,10 +11,10 @@
 
       <button class="ml-2 bg-blue-500 py-1 px-2 rounded-md" type='submit'>Save</button>
     </form>
-        <i v-if="this.StateUser.message._id === comment.creator._id" @click="commentOptions = !commentOptions" class="fa fa-ellipsis-v float-right cursor-pointer"></i>
+        <i v-if="this.StateUser.message._id === comment.creator._id" @click.stop="commentOptions = !commentOptions" class="fa fa-ellipsis-v float-right cursor-pointer"></i>
         <div v-if="commentOptions" class="bg-gray-400 float-right mr-2 text-black text-center">
-          <p v-if="this.StateUser.message._id === comment.creator._id" class="hover:bg-gray-300 cursor-pointer" @click='onClickEdit'>Edit comment</p>
-          <p v-if="this.StateUser.message._id === comment.creator._id" class="hover:bg-gray-300 cursor-pointer" @click="deleteComment(comment._id)">
+          <p v-if="this.StateUser.message._id === comment.creator._id" class="hover:bg-gray-300 cursor-pointer p-1" @click='onClickEdit'>Edit comment</p>
+          <p v-if="this.StateUser.message._id === comment.creator._id" class="hover:bg-gray-300 cursor-pointer p-1" @click="deleteComment(comment._id)">
           Delete Comment
         </p>
         </div>
@@ -37,6 +37,10 @@ export default {
   },
 
   mounted () {
+    document.addEventListener('click', this.documentClick())
+  },
+
+  beforeDestroy () {
     document.addEventListener('click', this.documentClick())
   },
 
