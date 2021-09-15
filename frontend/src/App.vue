@@ -1,11 +1,11 @@
 <template>
   <div class="text-white" id="app">
-    <nav class="text-black navbar w-full flex justify-between bg-gray-300 absolute top-0 right-0">
+    <nav class="text-black navbar w-full md:flex justify-between bg-gray-300 absolute top-0 md:h-18 min-h-30 right-0 z-0">
        <p class="text-2xl my-auto ml-4">
-      <router-link to="/">Bo Forums</router-link>
+      <router-link to="/"><span class="font-bold">Bo</span> Forums</router-link>
     </p>
-      <ul class="md:inline-flex hidden float-right list-none">
-        <li>
+      <ul :class="{ 'showNav' : isBurgerActive }" class="md:inline-flex hidden md:float-right list-none">
+        <li class="bg-gray-400 text-white font-bold rounded-md">
           <router-link to="/categories">Forum</router-link>
         </li>
         <li class="bg-blue-400 rounded-md" v-if="!this.isAuthenticated">
@@ -27,8 +27,10 @@
         </li>
       </ul>
     </nav>
-    <div class="md:hidden block">
-      <i @click="toggleBurger" :class="{ 'active' : isBurgerActive }" class="fa fa-bars absolute top-5 right-5 text-3xl"></i>
+    <div @click="toggleBurger" :class="{ 'change' : isBurgerActive }" class="md:hidden block burger">
+      <div class="bar1"></div>
+      <div class="bar2"></div>
+      <div class="bar3"></div>
     </div>
     <div class="container md:mx-auto my-24 mx-4">
       <router-view/>
@@ -50,9 +52,18 @@ export default {
     ...mapGetters(['StateUser'])
   },
 
+  mounted () {
+    window.addEventListener('resize', this.onResize)
+  },
+
+  beforeDestroy () {
+    window.addEventListener('resize', this.onResize)
+  },
+
   data () {
     return {
-      isBurgerActive: false
+      isBurgerActive: false,
+      windowWidth: window.innerWidth
     }
   },
 
@@ -65,6 +76,13 @@ export default {
 
     toggleBurger () {
       this.isBurgerActive = !this.isBurgerActive
+    },
+
+    onResize () {
+      this.windowWidth = window.innerWidth
+      if (this.windowWidth > 767) {
+        this.isBurgerActive = false
+      }
     }
   }
 }
@@ -74,6 +92,10 @@ export default {
   a {
     text-decoration: none;
     color: inherit;
+  }
+
+  .navbar {
+    min-height: 4rem;
   }
 
  .navbar > ul > li {
@@ -88,6 +110,41 @@ export default {
  textarea {
    outline: none;
    resize: none!important;
+ }
+
+ .burger {
+   position: absolute;
+   top: 2%;
+   right: 2%
+ }
+
+ .bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: rgb(0, 0, 0);
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.change .bar1 {
+  -webkit-transform: rotate(-45deg) translate(-9px, 6px);
+  transform: rotate(-45deg) translate(-9px, 6px);
+}
+
+.change .bar2 {opacity: 0;}
+
+.change .bar3 {
+  -webkit-transform: rotate(45deg) translate(-8px, -8px);
+  transform: rotate(45deg) translate(-8px, -8px);
+}
+
+ .showNav {
+   display: block!important;
+   text-align: center;
+   margin: 2rem auto 0 auto;
+   justify-content: center;
+   align-items: center;
+   width: 40%;
  }
 
    @import './assets/css/loading.css';
