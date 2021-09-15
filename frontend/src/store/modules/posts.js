@@ -70,6 +70,7 @@ const actions = {
       .catch(err => {
         commit('setPostErrors', err.response.data.error)
         console.log(err.response)
+        commit('loadingFalse')
       })
   },
 
