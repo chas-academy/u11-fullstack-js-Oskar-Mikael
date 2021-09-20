@@ -90,6 +90,10 @@ export default {
           axios.defaults.headers.common.authorization = localStorage.getItem('token')
           axios.defaults.headers.common.isadmin = this.StateUser.message.isAdmin
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     }
   }
 }

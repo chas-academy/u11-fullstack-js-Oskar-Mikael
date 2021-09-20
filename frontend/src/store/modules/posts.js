@@ -82,6 +82,10 @@ const actions = {
         router.push('/posts/' + id)
         commit('loadingFalse')
       })
+      .catch(err => {
+        console.log(err)
+        this.loadingFalse()
+      })
   },
 
   navigateToEditPost ({ commit }, id) {
@@ -91,6 +95,10 @@ const actions = {
         commit('setSelectedPost', res.data)
         router.push('/edit-post/' + id)
         commit('loadingFalse')
+      })
+      .catch(err => {
+        console.log(err)
+        this.loadingFalse()
       })
   }
 }

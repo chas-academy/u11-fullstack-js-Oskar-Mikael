@@ -175,6 +175,10 @@ export default {
           this.$router.push('/edit-user')
           this.loadingFalse()
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     navigatePost (id) {
@@ -187,6 +191,10 @@ export default {
         .then(res => {
           this.allUsers = res.data.message
           console.log(res)
+          this.loadingFalse()
+        })
+        .catch(err => {
+          console.log(err)
           this.loadingFalse()
         })
     },
@@ -205,6 +213,10 @@ export default {
           axios.defaults.headers.common.authorization = localStorage.getItem('token')
           axios.defaults.headers.common.isadmin = this.StateUser.message.isAdmin
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     deleteUser (id, username) {
@@ -215,6 +227,10 @@ export default {
             console.log(res)
             this.getUsers()
             alert('User Deleted')
+            this.loadingFalse()
+          })
+          .catch(err => {
+            console.log(err)
             this.loadingFalse()
           })
       } else {

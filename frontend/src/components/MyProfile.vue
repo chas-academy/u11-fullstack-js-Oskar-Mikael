@@ -139,6 +139,10 @@ export default {
           const postLikes = this.posts.map(post => post.likeCount)
           this.userLikeScore = postLikes.reduce((a, b) => a + b)
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     postNavigate (id) {
@@ -153,6 +157,10 @@ export default {
           console.log(res)
           this.loadingFalse()
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     privateTrue (id) {
@@ -162,6 +170,10 @@ export default {
           console.log(res)
           this.loadingFalse()
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     privateFalse (id) {
@@ -169,6 +181,10 @@ export default {
       axios.patch('/users/private-false/' + id)
         .then(res => {
           console.log(res)
+          this.loadingFalse()
+        })
+        .catch(err => {
+          console.log(err)
           this.loadingFalse()
         })
     },
@@ -197,6 +213,10 @@ export default {
           this.countries = res.data
           axios.defaults.headers.common.authorization = localStorage.getItem('token')
           axios.defaults.headers.common.isadmin = this.StateUser.message.isAdmin
+        })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
         })
     }
   }

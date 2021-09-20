@@ -62,6 +62,10 @@ export default {
           alert('User Updated')
           this.$router.back()
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     getCountries () {
@@ -73,6 +77,10 @@ export default {
           this.countries = res.data
           axios.defaults.headers.common.authorization = localStorage.getItem('token')
           axios.defaults.headers.common.isadmin = this.StateUser.message.isAdmin
+        })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
         })
     }
   }

@@ -83,6 +83,10 @@ export default {
           this.setSelectedPost(res.data)
           console.log(res.data)
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     deleteComment (id) {
@@ -91,6 +95,10 @@ export default {
           .then(res => {
             console.log(res)
             this.getPost()
+          })
+          .catch(err => {
+            console.log(err)
+            this.loadingFalse()
           })
       }
     }
