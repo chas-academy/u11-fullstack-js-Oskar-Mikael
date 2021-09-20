@@ -3,12 +3,10 @@
       <h2 class="text-3xl mb-8">
           {{ this.selectedPost.message.title }}
       </h2>
-      <p class="text-xl mb-4">
-          {{ this.selectedPost.message.body }}
-      </p>
+        <nl2br class="text-xl mb-4" tag="p" :text="this.selectedPost.message.body"/>
       <hr class="my-10">
       <p class="mb-4">
-          Posted by <span @click="clickUser" class="font-bold underline hover:no-underline cursor-pointer">{{ this.selectedPost.message.creator.message.username }}</span>
+          Posted by <span @click="clickUser" class="font-bold text-blue-500 underline hover:no-underline cursor-pointer">{{ this.selectedPost.message.creator.message.username }}</span>
       </p>
       <p>
        {{ this.selectedPost.message.likeCount }} likes
@@ -29,7 +27,7 @@
       <h3 class="text-2xl my-10">
         {{ this.selectedPost.message.comments.length }} Comments
       </h3>
-      <div v-if="this.isAuthenticated" class="mt-20">
+      <div v-if="this.isAuthenticated" class="mt-20 mb-8">
        <p class="mb-2">
           Add Comment
         </p>
@@ -41,8 +39,13 @@
         <button class="mt-4 bg-green-400 rounded-md text-black py-1 px-2" type="submit">Add Comment</button>
       </form>
       </div>
+      <div v-else class="mb-8">
+        <p>
+          <router-link to="/login" class="font-bold underline hover:no-underline">Login</router-link> or <router-link to="/register" class="font-bold underline hover:no-underline">Register</router-link> to comment
+        </p>
+      </div>
       <comment
-      class="mt-6"
+      class="mt-6 mb-12"
       v-for="comment in this.selectedPost.message.comments"
       :key="comment._id"
       :comment="comment"
@@ -56,10 +59,11 @@ import { mapGetters, mapActions, mapMutations } from 'vuex'
 import axios from 'axios'
 import router from '../helpers/router.js'
 import Comment from './Comment.vue'
+import nl2br from 'vue-nl2br'
 export default {
   name: 'Post',
 
-  components: { Comment },
+  components: { Comment, nl2br },
 
   computed: mapGetters(['selectedPost', 'StateUser', 'isAuthenticated']),
 

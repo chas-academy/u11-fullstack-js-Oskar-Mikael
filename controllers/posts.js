@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 export const getPosts = async (req, res) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find().sort({ createdAt: 'desc' });
     res.status(200).json(posts);
   } catch (error) {
     res.status(404).json({ message: error.message });
@@ -17,7 +17,7 @@ export const getUsersPosts = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const posts = await Post.find({ 'creator.message._id': id })
+    const posts = await Post.find({ 'creator.message._id': id }).sort({ createdAt: 'desc' })
     res.status(200).json({ message: posts })
   } catch (error) {
     res.status(400).json({ message: error.message })
@@ -28,7 +28,7 @@ export const getPostsByCategory = async (req, res) => {
   const { category } = req.query;
 
   try {
-    const posts = await Post.find({ category });
+    const posts = await Post.find({ category }).sort({ createdAt: 'desc' });
     if (posts.length === 0) {
       res.status(404).json({ message: 'No posts found' });
     }
@@ -45,7 +45,7 @@ export const searchPosts = async (req, res) => {
     const posts = await Post.find({
       category: { $regex: category, $exists: true, $ne: null },
       title: { $regex: title, $options: 'i', $exists: true, $ne: null },
-    });
+    }).sort({ createdAt: 'desc' });
     if (posts.length === 0) {
       res.status(404).json({ message: 'No posts found' });
     }

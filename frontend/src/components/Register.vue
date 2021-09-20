@@ -4,20 +4,20 @@
             Register
         </h2>
         <form method="post" @submit.prevent="register">
-            <input placeholder="Username *" class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="text" name="username" v-model="form.username"/><br>
+            <input placeholder="Username *" class="my-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" type="text" name="username" v-model="form.username"/><br>
             <p class="errors" v-if="errors.type == 'username'"><br>
                 {{ errors.message }}
             </p>
-            <input placeholder="Email *" class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="email" name="email" v-model="form.email"/><br>
+            <input placeholder="Email *" class="my-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" type="email" name="email" v-model="form.email"/><br>
              <p class="errors" v-if="errors.type == 'email'">
                 {{ errors.message }}
             </p>
-            <input placeholder="Password *" class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="password" name="password" v-model="form.password"/><br>
+            <input placeholder="Password *" class="my-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" type="password" name="password" v-model="form.password"/><br>
              <p class="errors" v-if="errors.type == 'password'">
                 {{ errors.message }}
             </p>
-            <input placeholder="Bio" class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="text" name="bio" v-model="form.bio"/><br>
-            <select class="my-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" name="country" v-model="form.country">
+            <input placeholder="Bio" class="my-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" type="text" name="bio" v-model="form.bio"/><br>
+            <select class="my-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" name="country" v-model="form.country">
               <option hidden value="">
                 -Select Country- *
               </option>

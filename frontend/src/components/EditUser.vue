@@ -4,16 +4,16 @@
             Update User
         </h2>
         <form method="post" @submit.prevent="updateUser(_self.SelectedUser._id)">
-            <input placeholder="Username" class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="text" name="username" v-model="form.username"/><br>
+            <input placeholder="Username" class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" type="text" name="username" v-model="form.username"/><br>
             <p class="errors" v-if="errors.type == 'username'">
                 {{ errors.message }}
             </p>
-            <input placeholder="Email" class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="email" name="email" v-model="form.email"/><br>
+            <input placeholder="Email" class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" type="email" name="email" v-model="form.email"/><br>
              <p class="errors" v-if="errors.type == 'email'">
                 {{ errors.message }}
             </p>
-            <input placeholder="Bio" class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" type="text" name="bio" v-model="form.bio"/><br>
-            <select class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" name="country" v-model="form.country">
+            <input placeholder="Bio" class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" type="text" name="bio" v-model="form.bio"/><br>
+            <select class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" name="country" v-model="form.country">
               <option selected>
                 {{ form.country }}
               </option>

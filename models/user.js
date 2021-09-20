@@ -10,15 +10,13 @@ const userSchema = mongoose.Schema(
     email: {
       type: String,
       unique: true,
+      trim: true,
     },
     bio: String,
     password: {
       type: String,
     },
     country: String,
-    image: {
-
-    },
     isAdmin: {
       type: Number,
       default: 0

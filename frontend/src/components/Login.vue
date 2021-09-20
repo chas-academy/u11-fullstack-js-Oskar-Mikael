@@ -4,8 +4,8 @@
        Login
      </h2>
      <form method="post" @submit.prevent="login">
-          <input class="mb-8 text-black bg-gray-200 pl-2 w-1/4 h-10 rounded-md" placeholder="Email" type="email" name="email" v-model="form.email"/><br>
-          <input class="bg-gray-200 text-black pl-2 w-1/4 h-10 rounded-md" placeholder="Password" type="password" name="password" v-model="form.password"/><br>
+          <input class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" placeholder="Email" type="email" name="email" v-model="form.email"/><br>
+          <input class="bg-gray-200 text-black pl-2 md:w-1/4 w-8/12 h-10 rounded-md" placeholder="Password" type="password" name="password" v-model="form.password"/><br>
           <p class="errors mt-4" v-if="this.errors">
           {{ errors }}
         </p>
@@ -13,7 +13,7 @@
       </form>
 
      <h4>
-       <router-link to="/register">
+       <router-link class="underline hover:no-underline" to="/register">
        Not registered?
        </router-link>
      </h4>
