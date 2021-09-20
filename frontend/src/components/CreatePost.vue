@@ -8,14 +8,8 @@
           <option selected value=''>
             -Select category-
           </option>
-          <option>
-            Family
-          </option>
-          <option>
-            Sports
-          </option>
-          <option>
-            Coding
+          <option v-for="category in allCategories" :key="category">
+            {{ category }}
           </option>
         </select><br>
         <p v-if="this.postErrors && this.postErrors.type === 'category'">
@@ -36,6 +30,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
+import categories from '../helpers/categories'
 export default {
   name: 'CreatePost',
 
@@ -48,7 +43,8 @@ export default {
         title: '',
         body: '',
         creator: this.$store.getters.StateUser
-      }
+      },
+      allCategories: categories
     }
   },
 
