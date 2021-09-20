@@ -97,6 +97,18 @@ PORT
 
 ## Database-structure
 
+### Users
+The user document has all the information about the user, including email, username, password, bio and country. The document also has an array of liked posts, which tracks which posts the user has liked. The document also has a role based property, called isAdmin, which tracks if the user is an admin or not.
+
+![image](https://user-images.githubusercontent.com/70320058/134014714-c4644457-cc46-48b3-9ce3-cd133e1de4ab.png)
+
+### Posts
+![image](https://user-images.githubusercontent.com/70320058/134015071-1d0dba7e-c580-4fb3-83eb-36b47e9ae920.png)
+
+The post document has all the information about the post, including title, body, likecount, category, and a creator object, which is an object of the user that created the post. The document also has an array of comments. Each comment has a message, and a creator object, which is an object of the user that left the comment. 
+
+
+
 ## Contributors
 - *Oskar Boström* [Github](https://github.com/Oskar-Mikael)
 
