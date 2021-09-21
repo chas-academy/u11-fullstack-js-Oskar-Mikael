@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 import Loading from './components/Loading.vue'
 export default {
   name: 'App',
@@ -48,12 +48,12 @@ export default {
   components: { Loading },
 
   computed: {
-    ...mapGetters(['isAuthenticated']),
-    ...mapGetters(['StateUser'])
+    ...mapGetters(['isAuthenticated', 'StateUser', 'isLoading'])
   },
 
   mounted () {
     window.addEventListener('resize', this.onResize)
+    this.loadingFalse()
   },
 
   beforeDestroy () {
@@ -68,6 +68,7 @@ export default {
   },
 
   methods: {
+    ...mapMutations(['loadingFalse']),
     ...mapActions(['LogOut']),
 
     logout () {
