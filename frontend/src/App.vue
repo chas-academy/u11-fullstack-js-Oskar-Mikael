@@ -33,33 +33,33 @@
       </ul>
     </nav>
     <div class="mobile-nav text-black md:hidden block fixed bottom-0 w-full bg-gray-300">
-        <ul class="flex list-none justify-center my-2">
+        <ul class="flex list-none justify-center my-2 text-sm">
         <li class="bg-gray-400 text-white font-bold rounded-md">
           <router-link to="/categories">
-          <i class="fa fa-comments flex justify-center text-4xl"></i>
+          <i class="fa fa-comments flex justify-center text-2xl"></i>
           Forum
           </router-link>
         </li>
         <li class="bg-blue-400 rounded-md" v-if="!this.isAuthenticated">
-          <router-link to="/login"><i class="fa fa-sign-in flex justify-center text-4xl"></i>
+          <router-link to="/login"><i class="fa fa-sign-in flex justify-center text-2xl"></i>
           Join Now!
           </router-link>
         </li>
         <li class="bg-green-400 rounded-md" v-if="this.isAuthenticated">
           <router-link to="/create-post">
-          <i class="fa fa-plus-square flex justify-center text-4xl"></i>
+          <i class="fa fa-plus-square flex justify-center text-2xl"></i>
           Create Post
           </router-link>
         </li>
         <li class="bg-blue-400 rounded-md" v-if="this.isAuthenticated">
           <router-link to="/my-profile">
-          <i class="fa fa-user flex justify-center text-4xl"></i>
+          <i class="fa fa-user flex justify-center text-2xl"></i>
           Profile
           </router-link>
         </li>
         <li class="bg-yellow-300 rounded-md" v-if="this.isAuthenticated && this.StateUser.message.isAdmin">
           <router-link to="/admin">
-          <i class="fa fa-shield flex justify-center text-4xl"></i>
+          <i class="fa fa-shield flex justify-center text-2xl"></i>
           Admin
           </router-link>
         </li>
@@ -139,9 +139,8 @@ export default {
 
  .mobile-nav > ul > li {
    padding: 0.5rem 0.1rem;
-   margin: 0 0.5rem;
-   display: inline;
-   min-width: 5rem;
+   margin: 0 1rem;
+   min-width: 3rem;
    text-align: center;
  }
 
