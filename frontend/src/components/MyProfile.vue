@@ -9,7 +9,9 @@
       <p>
         Like score: {{ this.userLikeScore }}
       </p>
-      <h3 class="mt-10 mb-6 text-xl">
+      <div class="grid md:grid-cols-2 grid-cols-1">
+        <div>
+      <h3 class="mt-10 mb-6 text-2xl">
         Posts
       </h3>
       <div class="bg-gray-400 mb-4 text-black w-full md:w-1/2 py-12 pl-4 cursor-pointer rounded-md" v-for="post in posts" :key="post._id" @click="postNavigate(post._id)">
@@ -34,6 +36,8 @@
           {{ post.category }}
         </p>
       </div>
+        </div>
+        <div class="justify-end">
       <h3 class="mt-12 text-2xl mb-6">
         Settings
       </h3>
@@ -52,7 +56,7 @@
         Update password
       </p>
       <form @submit.prevent="updatePassword">
-        <input class="pl-2 md:w-1/4 w-8/12 h-8 mb-2 text-black rounded-md" type="password" v-model="passwordForm.newPassword"><br>
+        <input class="pl-2 md:w-1/2 w-8/12 h-8 mb-2 text-black rounded-md" type="password" v-model="passwordForm.newPassword"><br>
         <button class="py-1 px-2 bg-blue-500 rounded-md" type="submit">Save</button>
       </form>
       <div class="mt-10">
@@ -60,8 +64,8 @@
           Edit Profile
         </p>
           <form method="post" @submit.prevent="updateUser(_self.$store.getters.StateUser.message._id)">
-            <textarea placeholder="Bio" class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-32 rounded-md" type="text" name="bio" v-model="form.bio"/><br>
-            <select class="mb-2 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md" name="country" v-model="form.country">
+            <textarea placeholder="Bio" class="mb-8 text-black bg-gray-200 pl-2 md:w-1/2 w-8/12 h-32 rounded-md" type="text" name="bio" v-model="form.bio"/><br>
+            <select class="mb-2 text-black bg-gray-200 pl-2 md:w-1/2 w-8/12 h-10 rounded-md" name="country" v-model="form.country">
               <option selected>
                 {{ form.country }}
               </option>
@@ -75,6 +79,8 @@
             </p>
             <button class="py-1 px-2 bg-blue-500 rounded-md" type="submit">Save</button>
         </form>
+      </div>
+        </div>
       </div>
   </div>
 </template>
