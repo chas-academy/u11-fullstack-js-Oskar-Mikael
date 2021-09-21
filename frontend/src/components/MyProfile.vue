@@ -3,6 +3,9 @@
       <h2 class="text-3xl">
           {{ this.StateUser.message.username }}
       </h2>
+      <p class="my-8">
+        {{ this.StateUser.message.bio }}
+      </p>
       <p>
         Total posts: {{ this.posts.length }}
       </p>
