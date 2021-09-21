@@ -1,6 +1,6 @@
 <template>
   <div class="text-white" id="app">
-    <nav class="text-black navbar w-full flex justify-between bg-gray-300 md:absolute fixed top-0 md:h-18 min-h-30 right-0 z-0">
+    <nav class="text-black navbar w-full flex justify-between bg-gray-300 absolute top-0 md:h-18 min-h-30 right-0 z-0">
        <p class="text-2xl my-auto ml-4">
       <router-link to="/"><span class="font-bold">Bo</span> Forums</router-link>
     </p>
