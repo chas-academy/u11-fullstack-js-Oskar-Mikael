@@ -4,7 +4,7 @@
           Category
         </h2>
         <form @change="selectCategory">
-          <select class="text-black w-1/6 h-8" v-model="selectedCategory">
+          <select class="pl-2 md:w-1/4 w-8/12 h-10 mb-2 text-black rounded-md" v-model="selectedCategory">
           <option hidden value="">
             -Select Category-
           </option>
