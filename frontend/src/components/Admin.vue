@@ -95,8 +95,8 @@
               <option hidden value="">
                 -Select Country- *
               </option>
-              <option v-for="country in countries" :key="country.id">
-                {{ country.name }}
+              <option v-for="country in countries" :key="country">
+                {{ country }}
               </option>
             </select><br>
             <p class="errors" v-if="errors.type == 'country'">
@@ -110,6 +110,7 @@
 
 <script>
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+import countryList from '../helpers/countries'
 import axios from 'axios'
 export default {
   name: 'Admin',
@@ -117,7 +118,6 @@ export default {
   mounted () {
     this.fetchPosts()
     this.getUsers()
-    this.getCountries()
   },
 
   data () {
@@ -131,7 +131,7 @@ export default {
         country: ''
       },
       errors: '',
-      countries: ''
+      countries: countryList
     }
   },
 
@@ -201,22 +201,6 @@ export default {
 
     clickUser (id) {
       this.getUser(id)
-    },
-
-    getCountries () {
-      delete axios.defaults.headers.common.authorization
-      delete axios.defaults.headers.common.isadmin
-      axios.get('https://restcountries.eu/rest/v2/all')
-        .then(res => {
-          console.log(res)
-          this.countries = res.data
-          axios.defaults.headers.common.authorization = localStorage.getItem('token')
-          axios.defaults.headers.common.isadmin = this.StateUser.message.isAdmin
-        })
-        .catch(err => {
-          console.log(err)
-          this.loadingFalse()
-        })
     },
 
     deleteUser (id, username) {

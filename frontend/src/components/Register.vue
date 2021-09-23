@@ -21,8 +21,8 @@
               <option hidden value="">
                 -Select Country- *
               </option>
-              <option v-for="country in countries" :key="country.id">
-                {{ country.name }}
+              <option v-for="country in countries" :key="country">
+                {{ country }}
               </option>
             </select><br>
             <p class="errors" v-if="errors.type == 'country'">
@@ -36,13 +36,13 @@
 <script>
 import axios from 'axios'
 import { mapGetters, mapMutations } from 'vuex'
+import countryList from '../helpers/countries'
 export default {
   name: 'Register',
 
   computed: mapGetters(['StateUser']),
 
   mounted () {
-    this.getCountries()
     this.errors = ''
   },
 
@@ -56,7 +56,7 @@ export default {
         country: ''
       },
       errors: '',
-      countries: ''
+      countries: countryList
     }
   },
 
@@ -76,22 +76,6 @@ export default {
         .catch((err) => {
           this.errors = err.response.data.error
           console.log(err.response)
-          this.loadingFalse()
-        })
-    },
-
-    getCountries () {
-      delete axios.defaults.headers.common.authorization
-      delete axios.defaults.headers.common.isadmin
-      axios.get('https://restcountries.eu/rest/v2/all')
-        .then(res => {
-          console.log(res)
-          this.countries = res.data
-          axios.defaults.headers.common.authorization = localStorage.getItem('token')
-          axios.defaults.headers.common.isadmin = this.StateUser.message.isAdmin
-        })
-        .catch(err => {
-          console.log(err)
           this.loadingFalse()
         })
     }
