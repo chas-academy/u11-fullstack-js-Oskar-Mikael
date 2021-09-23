@@ -65,7 +65,7 @@
         </li>
       </ul>
       </div>
-    <div class="container mx-auto my-24 px-4">
+    <div class="container mx-auto mt-24 mb-48 px-4">
       <router-view/>
     </div>
     <Loading />
