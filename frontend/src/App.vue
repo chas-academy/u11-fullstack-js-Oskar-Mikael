@@ -85,19 +85,10 @@ export default {
   },
 
   mounted () {
-    window.addEventListener('resize', this.onResize)
     this.loadingFalse()
   },
 
   beforeDestroy () {
-    window.addEventListener('resize', this.onResize)
-  },
-
-  data () {
-    return {
-      isBurgerActive: false,
-      windowWidth: window.innerWidth
-    }
   },
 
   methods: {
@@ -106,17 +97,6 @@ export default {
 
     logout () {
       this.LogOut()
-    },
-
-    toggleBurger () {
-      this.isBurgerActive = !this.isBurgerActive
-    },
-
-    onResize () {
-      this.windowWidth = window.innerWidth
-      if (this.windowWidth > 767) {
-        this.isBurgerActive = false
-      }
     }
   }
 }
