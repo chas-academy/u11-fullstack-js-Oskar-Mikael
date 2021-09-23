@@ -19,7 +19,7 @@
           <p class="text-red-600 mt-2" v-if="this.postErrors && this.postErrors.type === 'title'">
             {{ this.postErrors.message }}
           </p>
-          <textarea placeholder="Body" class="mt-8 text-black bg-gray-200 pl-2 w-1/2 h-72 rounded-md"  type="text" v-model="form.body"/><br>
+          <textarea placeholder="Body" class="mt-8 text-black bg-gray-200 pl-2 md:w-1/2 w-full h-72 rounded-md"  type="text" v-model="form.body"/><br>
           <p class="text-red-600 mt-2" v-if="this.postErrors && this.postErrors.type === 'body'">
             {{ this.postErrors.message }}
           </p>
