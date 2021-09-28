@@ -3,9 +3,8 @@
     <p @click="clickUser(comment.creator._id)" class="font-bold text-blue-500 underline hover:no-underline cursor-pointer w-1/6">
       {{ comment.creator.username }}
     </p>
-    <p class="ml-2 mt-2">
-    {{ comment.message }}
-    </p>
+    <nl2br tag="p" class="ml-2 mt-2" :text="comment.message"/>
+
     <form v-if='editing' @submit.prevent='editComment'>
       <input class="w-1/4 h-8 rounded-md text-black pl-2" type='text' v-model='updatedCommentMessage' />
 
@@ -25,8 +24,11 @@
 <script>
 import axios from 'axios'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import nl2br from 'vue-nl2br'
 export default {
   name: 'Comment',
+
+  components: { nl2br },
 
   computed: mapGetters(['selectedPost', 'StateUser']),
 
