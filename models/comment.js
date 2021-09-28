@@ -4,8 +4,9 @@ const commentSchema = mongoose.Schema({
     message: {
         type: String,
         required: [true, 'Message field is required'],
+        trim: true
     },
-    creator: String
+    creator: {}
 }, {timestamps: true});
 
 const Comment = mongoose.model('Comment', commentSchema);

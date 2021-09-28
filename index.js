@@ -3,11 +3,13 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import posts from './routes/api/posts.js';
 import users from './routes/api/users.js';
+import dotenv from 'dotenv';
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+dotenv.config()
 
 app.use('/api/posts', posts);
 
@@ -19,7 +21,7 @@ const PORT = process.env.PORT || 5000;
 
 mongoose
   .connect(
-    'mongodb+srv://root:root@cluster0.eqraj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority',
+    process.env.MONGO_URI,
     { useNewUrlParse: true, useUnifiedTopology: true }
   )
   .then(() =>

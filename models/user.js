@@ -4,24 +4,28 @@ const userSchema = mongoose.Schema(
   {
     username: {
       type: String,
-      required: [true, 'Username field cannot be blank'],
       unique: true,
       trim: true,
     },
     email: {
       type: String,
-      required: [true, 'Email field cannot be blank'],
       unique: true,
+      trim: true,
     },
     bio: String,
     password: {
       type: String,
-      required: [true, 'Password field cannot be blank'],
     },
+    country: String,
     isAdmin: {
       type: Number,
       default: 0
     },
+    isPrivate: {
+      type: Number,
+      default: 0
+    },
+    likedPosts: [],
   },
   { timestamps: true }
 );
