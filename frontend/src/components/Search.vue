@@ -3,25 +3,16 @@
     <h2 class="text-xl mb-6">
       Custom search
     </h2>
-      <p class="mb-2 text-lg">
-          Category
-      </p>
       <form @submit.prevent="query">
-          <select class="text-black w-1/6 h-8 mb-8" v-model="form.selectedCategory">
+          <select class="pl-2 md:w-1/4 w-8/12 h-10 mb-8 text-black rounded-md" v-model="form.selectedCategory">
           <option hidden value="">
             -Select Category-
           </option>
-            <option>
-              Family
-            </option>
-            <option>
-              Sports
-            </option>
-            <option>
-              Coding
-            </option>
+            <option v-for="category in allCategories" :key="category">
+            {{ category }}
+          </option>
           </select><br>
-          <input class="pl-2 w-1/6 h-8 mb-8 text-black" placeholder="Title" type="text" v-model="form.searchTitle"><br>
+          <input class="pl-2 md:w-1/4 w-8/12 h-10 mb-4 text-black rounded-md" placeholder="Title" type="text" v-model="form.searchTitle"><br>
           <button class="py-2 px-4 bg-green-600 rounded-md" type="submit">
               Search
           </button>
@@ -31,7 +22,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-
+import categories from '../helpers/categories'
 export default {
   name: 'Search',
 
@@ -40,7 +31,8 @@ export default {
       form: {
         selectedCategory: '',
         searchTitle: ''
-      }
+      },
+      allCategories: categories
     }
   },
 

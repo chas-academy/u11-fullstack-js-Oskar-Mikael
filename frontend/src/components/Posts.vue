@@ -1,5 +1,8 @@
 <template>
     <div>
+      <h2 class="text-2xl mb-8">
+        Search gave {{ allPosts.length }} matches
+      </h2>
       <div class="bg-gray-400 mb-4 text-black w-full md:w-1/2 py-12 pl-4 cursor-pointer rounded-md" v-for="post in allPosts" :key="post._id" @click="postNavigate(post._id)">
         <p class="text-2xl mb-1 font-bold">
             {{ post.title }}

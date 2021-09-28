@@ -17,7 +17,7 @@ app.get('/', (req, res) => res.send('Welcome to U11 Backend'));
 
 app.use('/api/users', users);
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 mongoose
   .connect(

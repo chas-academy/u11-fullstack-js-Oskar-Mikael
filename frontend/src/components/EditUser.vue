@@ -17,8 +17,8 @@
               <option selected>
                 {{ form.country }}
               </option>
-              <option v-for="country in countries" :key="country.id">
-                {{ country.name }}
+              <option v-for="country in countries" :key="country">
+                {{ country }}
               </option>
             </select><br>
             <p class="errors" v-if="errors.type == 'country'">
@@ -32,13 +32,13 @@
 <script>
 import axios from 'axios'
 import { mapGetters } from 'vuex'
+import countryList from '../helpers/countries'
 export default {
   name: 'EditUser',
 
   computed: mapGetters(['StateUser', 'SelectedUser']),
 
   mounted () {
-    this.getCountries()
   },
 
   data () {
@@ -50,7 +50,7 @@ export default {
         country: this.$store.getters.SelectedUser.country
       },
       errors: '',
-      countries: ''
+      countries: countryList
     }
   },
 
@@ -62,17 +62,9 @@ export default {
           alert('User Updated')
           this.$router.back()
         })
-    },
-
-    getCountries () {
-      delete axios.defaults.headers.common.authorization
-      delete axios.defaults.headers.common.isadmin
-      axios.get('https://restcountries.eu/rest/v2/all')
-        .then(res => {
-          console.log(res)
-          this.countries = res.data
-          axios.defaults.headers.common.authorization = localStorage.getItem('token')
-          axios.defaults.headers.common.isadmin = this.StateUser.message.isAdmin
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
         })
     }
   }

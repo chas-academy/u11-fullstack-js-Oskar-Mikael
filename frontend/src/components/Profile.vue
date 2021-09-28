@@ -76,6 +76,10 @@ export default {
           this.userLikeScore = postLikes.reduce((a, b) => a + b)
           this.loadingFalse()
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     postNavigate (id) {

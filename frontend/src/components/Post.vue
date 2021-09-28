@@ -103,6 +103,10 @@ export default {
             console.log(res)
             this.loadingFalse()
           })
+          .catch(err => {
+            console.log(err)
+            this.loadingFalse()
+          })
       }
     },
 
@@ -112,6 +116,10 @@ export default {
         .then(res => {
           this.setSelectedPost(res.data)
           console.log(res.data)
+          this.loadingFalse()
+        })
+        .catch(err => {
+          console.log(err)
           this.loadingFalse()
         })
     },
@@ -136,6 +144,10 @@ export default {
           this.getCurrentUser()
           this.getPost()
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     unlikePost () {
@@ -145,12 +157,20 @@ export default {
           this.getCurrentUser()
           this.getPost()
         })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
+        })
     },
 
     getCurrentUser () {
       axios.get('/users/' + this.StateUser.message._id)
         .then(res => {
           this.setUser(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+          this.loadingFalse()
         })
     },
 

@@ -4,19 +4,16 @@
           Category
         </h2>
         <form @change="selectCategory">
-          <select class="text-black w-1/6 h-8" v-model="selectedCategory">
+          <select class="pl-2 md:w-1/4 w-8/12 h-10 mb-2 text-black rounded-md" v-model="selectedCategory">
           <option hidden value="">
             -Select Category-
           </option>
-            <option>
-              Family
-            </option>
-            <option>
-              Sports
-            </option>
-            <option>
-              Coding
-            </option>
+            <option selected value=''>
+            -Select category-
+          </option>
+          <option v-for="category in allCategories" :key="category">
+            {{ category }}
+          </option>
           </select>
         </form>
         <hr class="my-14">
@@ -27,6 +24,7 @@
 <script>
 
 import { mapGetters, mapActions } from 'vuex'
+import categories from '../helpers/categories'
 import Search from './Search.vue'
 
 export default {
@@ -39,7 +37,8 @@ export default {
   data () {
     return {
       posts: '',
-      selectedCategory: ''
+      selectedCategory: '',
+      allCategories: categories
     }
   },
 
