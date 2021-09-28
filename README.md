@@ -27,18 +27,11 @@
 
 Javascript and CSS follows the Airbnb code standards
 
-#### PSR-2 coding style guide
-
-* White space on new line between functions/methods
-* Classes should be declared in PascalCase
-* Variables, methods/functions should be declared in camelCase
-* Keep it DRY
-* If a function/method can do a lot of things, try to separate the functionality into two or more functions/methods
-* Try not to overwrite controllers-method names, if you  must, make a new controller method
-
 ## Goals and Context
 
 ### Project Solves
+
+This application offers a a clean, friendly, and easy to use forum like experience, where user's may sign up and right away start discussing on several topics. With many other forum based websites on the net, BoForums does this different by making it quick to use, and focuses heavily on the user experience.
 
 <!-- GETTING STARTED -->
 ## Getting Started
