@@ -32,7 +32,7 @@
           Add Comment
         </p>
       <form @submit.prevent="addComment">
-        <input class="w-1/4 h-8 rounded-md text-black pl-2" type="text" v-model="form.message"><br>
+        <textarea class="md:w-1/4 w-1/2 h-24 rounded-md text-black pl-2" type="text" v-model="form.message"/><br>
         <p v-if="this.errors">
           {{ errors }}
         </p>
