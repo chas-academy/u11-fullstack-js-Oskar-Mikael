@@ -5,20 +5,29 @@
     </div>
     <div v-else>
       <h2 class="text-3xl">
-          Profile of {{ this.SelectedUser.message.username }}
+        Profile of {{ this.SelectedUser.message.username }}
       </h2>
-      <p>
-        Total posts: {{ userPosts.length }}
-      </p>
-      <p>
-        Like score: {{ this.userLikeScore }}
-      </p>
-      <p class="mt-10 mb-6 text-xl">
-        Posts
-      </p>
-      <div class="bg-gray-400 mb-4 text-black w-full md:w-1/2 py-12 pl-4 cursor-pointer rounded-md" @click="postNavigate(post._id)" v-for="post in userPosts" :key="post._id">
+      <p>Total posts: {{ userPosts.length }}</p>
+      <p>Like score: {{ this.userLikeScore }}</p>
+      <p class="mt-10 mb-6 text-xl">Posts</p>
+      <div
+        class="
+          bg-gray-400
+          mb-4
+          text-black
+          w-full
+          md:w-1/2
+          py-12
+          pl-4
+          cursor-pointer
+          rounded-md
+        "
+        @click="postNavigate(post._id)"
+        v-for="post in userPosts"
+        :key="post._id"
+      >
         <p class="text-2xl mb-1 font-bold">
-            {{ post.title }}
+          {{ post.title }}
         </p>
         <p class="mb-6" v-if="post.body.length >= 40">
           {{ post.body.substr(0, 40) + "..." }}
@@ -38,7 +47,6 @@
           {{ post.category }}
         </p>
       </div>
-
     </div>
   </div>
 </template>
