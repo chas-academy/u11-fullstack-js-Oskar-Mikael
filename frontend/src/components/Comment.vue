@@ -27,7 +27,7 @@
       </button>
     </form>
     <i
-      v-if="this.StateUser.message._id === comment.creator._id"
+      v-if="this.StateUser.message._id === comment.creator._id || this.StateUser.message.isAdmin"
       @click.stop="commentOptions = !commentOptions"
       class="fa fa-ellipsis-v float-right cursor-pointer"
     ></i>
@@ -36,14 +36,12 @@
       class="bg-gray-400 float-right mr-2 text-black text-center"
     >
       <p
-        v-if="this.StateUser.message._id === comment.creator._id"
         class="hover:bg-gray-300 cursor-pointer p-1"
         @click="onClickEdit"
       >
         Edit comment
       </p>
       <p
-        v-if="this.StateUser.message._id === comment.creator._id"
         class="hover:bg-gray-300 cursor-pointer p-1"
         @click="deleteComment(comment._id)"
       >
