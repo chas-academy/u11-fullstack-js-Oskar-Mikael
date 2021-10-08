@@ -43,7 +43,7 @@
             class="underline hover:no-underline cursor-pointer"
             @click="clickUser(user._id)"
           >
-            {{ user.username }}
+            {{ user.username }} <span v-if="user.isAdmin"><i class="fa fa-shield ml-1" title="Admin"></i></span>
           </td>
           <td>
             {{ user.email }}
