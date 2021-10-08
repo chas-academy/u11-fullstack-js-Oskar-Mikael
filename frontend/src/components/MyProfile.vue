@@ -3,8 +3,11 @@
     <h2 class="text-3xl">
       {{ this.StateUser.message.username }}
     </h2>
-    <p class="my-8">
+    <p class="my-4">
       {{ this.StateUser.message.bio }}
+    </p>
+    <p class="text-xl mb-8">
+      {{ this.StateUser.message.country }}
     </p>
     <p>Total posts: {{ this.posts.length }}</p>
     <p>Like score: {{ this.userLikeScore }}</p>

@@ -1,12 +1,18 @@
 <template>
   <div>
-    <div class="text-2xl" v-if="this.SelectedUser.message.isPrivate">
+    <div class="text-2xl" v-if="this.SelectedUser.message.isPrivate && !this.StateUser.message.isAdmin">
       This profile is private
     </div>
     <div v-else>
       <h2 class="text-3xl">
         Profile of {{ this.SelectedUser.message.username }}
       </h2>
+      <p class="my-4">
+        {{ this.SelectedUser.message.bio }}
+      </p>
+      <p class="text-xl mb-8">
+        {{ this.SelectedUser.message.country }}
+      </p>
       <p>Total posts: {{ userPosts.length }}</p>
       <p>Like score: {{ this.userLikeScore }}</p>
       <p class="mt-10 mb-6 text-xl">Posts</p>
@@ -57,7 +63,7 @@ import axios from 'axios'
 export default {
   name: 'Profile',
 
-  computed: mapGetters(['SelectedUser']),
+  computed: mapGetters(['SelectedUser', 'StateUser']),
 
   data () {
     return {
