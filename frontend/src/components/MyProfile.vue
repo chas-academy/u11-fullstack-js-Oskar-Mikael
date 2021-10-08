@@ -1,74 +1,122 @@
 <template>
   <div>
-      <h2 class="text-3xl">
-          {{ this.StateUser.message.username }}
-      </h2>
-      <p class="my-8">
-        {{ this.StateUser.message.bio }}
-      </p>
-      <p>
-        Total posts: {{ this.posts.length }}
-      </p>
-      <p>
-        Like score: {{ this.userLikeScore }}
-      </p>
-      <div class="grid md:grid-cols-2 grid-cols-1">
-        <div>
-      <h3 class="mt-10 mb-6 text-2xl">
-        Posts
-      </h3>
-      <div class="bg-gray-400 mb-4 text-black w-full md:w-1/2 py-12 pl-4 cursor-pointer rounded-md" v-for="post in posts" :key="post._id" @click="postNavigate(post._id)">
-         <p class="text-2xl mb-1 font-bold">
+    <h2 class="text-3xl">
+      {{ this.StateUser.message.username }}
+    </h2>
+    <p class="my-8">
+      {{ this.StateUser.message.bio }}
+    </p>
+    <p>Total posts: {{ this.posts.length }}</p>
+    <p>Like score: {{ this.userLikeScore }}</p>
+    <div class="grid md:grid-cols-2 grid-cols-1">
+      <div>
+        <h3 class="mt-10 mb-6 text-2xl">Posts</h3>
+        <div
+          class="
+            bg-gray-400
+            mb-4
+            text-black
+            w-full
+            md:w-1/2
+            py-12
+            pl-4
+            cursor-pointer
+            rounded-md
+          "
+          v-for="post in posts"
+          :key="post._id"
+          @click="postNavigate(post._id)"
+        >
+          <p class="text-2xl mb-1 font-bold">
             {{ post.title }}
-        </p>
-        <p class="mb-6" v-if="post.body.length >= 40">
-          {{ post.body.substr(0, 40) + "..." }}
-        </p>
-        <p class="mb-6" v-else>
-          {{ post.body }}
-        </p>
-        <p>
-          <i class="fa fa-thumbs-up"></i>
-          {{ post.likeCount }}
-        </p>
-        <p>
-          <i class="fa fa-comments"></i>
-          {{ post.comments.length }}
-        </p>
-        <p class="mt-6 font-bold">
-          {{ post.category }}
-        </p>
-      </div>
+          </p>
+          <p class="mb-6" v-if="post.body.length >= 40">
+            {{ post.body.substr(0, 40) + "..." }}
+          </p>
+          <p class="mb-6" v-else>
+            {{ post.body }}
+          </p>
+          <p>
+            <i class="fa fa-thumbs-up"></i>
+            {{ post.likeCount }}
+          </p>
+          <p>
+            <i class="fa fa-comments"></i>
+            {{ post.comments.length }}
+          </p>
+          <p class="mt-6 font-bold">
+            {{ post.category }}
+          </p>
         </div>
-        <div class="justify-end">
-      <h3 class="mt-12 text-2xl mb-6">
-        Settings
-      </h3>
-      <div class="flex mb-6">
-      <p class="text-lg mr-2">
-        Private Profile
-      </p>
-      <form class="mt-1" v-if="!this.StateUser.message.isPrivate" @change="privateTrue($store.getters.StateUser.message._id)">
-        <input type="checkbox"/>
-      </form>
-      <form class="mt-1" v-else @change="privateFalse($store.getters.StateUser.message._id)">
-        <input type="checkbox" checked/>
-      </form>
       </div>
-      <p class="mb-2">
-        Update password
-      </p>
-      <form @submit.prevent="updatePassword">
-        <input class="pl-2 md:w-1/2 w-8/12 h-8 mb-2 text-black rounded-md" type="password" v-model="passwordForm.newPassword"><br>
-        <button class="py-1 px-2 bg-blue-500 rounded-md" type="submit">Save</button>
-      </form>
-      <div class="mt-10">
-        <p class="text-xl mb-4">
-          Edit Profile
-        </p>
-          <form method="post" @submit.prevent="updateUser(_self.$store.getters.StateUser.message._id)">
-            <textarea placeholder="Bio" class="mb-8 text-black bg-gray-200 pl-2 md:w-1/2 w-8/12 h-32 rounded-md" type="text" name="bio" v-model="form.bio"/><br>
-            <select class="mb-2 text-black bg-gray-200 pl-2 md:w-1/2 w-8/12 h-10 rounded-md" name="country" v-model="form.country">
+      <div class="justify-end">
+        <h3 class="mt-12 text-2xl mb-6">Settings</h3>
+        <div class="flex mb-6">
+          <p class="text-lg mr-2">Private Profile</p>
+          <form
+            class="mt-1"
+            v-if="!this.StateUser.message.isPrivate"
+            @change="privateTrue($store.getters.StateUser.message._id)"
+          >
+            <input type="checkbox" />
+          </form>
+          <form
+            class="mt-1"
+            v-else
+            @change="privateFalse($store.getters.StateUser.message._id)"
+          >
+            <input type="checkbox" checked />
+          </form>
+        </div>
+        <p class="mb-2">Update password</p>
+        <form @submit.prevent="updatePassword">
+          <input
+            class="pl-2 md:w-1/2 w-8/12 h-8 mb-2 text-black rounded-md"
+            type="password"
+            v-model="passwordForm.newPassword"
+          /><br />
+          <button class="py-1 px-2 bg-blue-500 rounded-md" type="submit">
+            Save
+          </button>
+        </form>
+        <div class="mt-10">
+          <p class="text-xl mb-4">Edit Profile</p>
+          <form
+            method="post"
+            @submit.prevent="
+              updateUser(_self.$store.getters.StateUser.message._id)
+            "
+          >
+            <textarea
+              placeholder="Bio"
+              class="
+                mb-8
+                text-black
+                bg-gray-200
+                pl-2
+                md:w-1/2
+                w-8/12
+                h-32
+                rounded-md
+              "
+              type="text"
+              name="bio"
+              v-model="form.bio"
+            /><br />
+            <select
+              class="
+                mb-2
+                text-black
+                bg-gray-200
+                pl-2
+                md:w-1/2
+                w-8/12
+                h-10
+                rounded-md
+              "
+              name="country"
+              v-model="form.country"
+            >
               <option selected>
                 {{ form.country }}
               </option>
@@ -76,15 +124,17 @@
                 {{ country }}
               </option>
             </select>
-            <br>
+            <br />
             <p class="errors" v-if="errors.type == 'country'">
-                {{ errors.message }}
+              {{ errors.message }}
             </p>
-            <button class="py-1 px-2 bg-blue-500 rounded-md" type="submit">Save</button>
-        </form>
-      </div>
+            <button class="py-1 px-2 bg-blue-500 rounded-md" type="submit">
+              Save
+            </button>
+          </form>
         </div>
       </div>
+    </div>
   </div>
 </template>
 

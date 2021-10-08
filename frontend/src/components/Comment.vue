@@ -1,32 +1,67 @@
 <template>
   <div @click="documentClick" class="w-4/5 comment">
-    <p @click="clickUser(comment.creator._id)" class="font-bold text-blue-500 underline hover:no-underline cursor-pointer w-1/6">
+    <p
+      @click="clickUser(comment.creator._id)"
+      class="
+        font-bold
+        text-blue-500
+        underline
+        hover:no-underline
+        cursor-pointer
+        w-1/6
+      "
+    >
       {{ comment.creator.username }}
     </p>
-    <p class="ml-2 mt-2">
-    {{ comment.message }}
-    </p>
-    <form v-if='editing' @submit.prevent='editComment'>
-      <input class="w-1/4 h-8 rounded-md text-black pl-2" type='text' v-model='updatedCommentMessage' />
+    <nl2br tag="p" class="ml-2 mt-2" :text="comment.message" />
 
-      <button class="ml-2 bg-blue-500 py-1 px-2 rounded-md" type='submit'>Save</button>
+    <form v-if="editing" @submit.prevent="editComment">
+      <input
+        class="w-1/4 h-8 rounded-md text-black pl-2"
+        type="text"
+        v-model="updatedCommentMessage"
+      />
+
+      <button class="ml-2 bg-blue-500 py-1 px-2 rounded-md" type="submit">
+        Save
+      </button>
     </form>
-        <i v-if="this.StateUser.message._id === comment.creator._id" @click.stop="commentOptions = !commentOptions" class="fa fa-ellipsis-v float-right cursor-pointer"></i>
-        <div v-if="commentOptions" class="bg-gray-400 float-right mr-2 text-black text-center">
-          <p v-if="this.StateUser.message._id === comment.creator._id" class="hover:bg-gray-300 cursor-pointer p-1" @click='onClickEdit'>Edit comment</p>
-          <p v-if="this.StateUser.message._id === comment.creator._id" class="hover:bg-gray-300 cursor-pointer p-1" @click="deleteComment(comment._id)">
-          Delete Comment
-        </p>
-        </div>
-        <hr class="mt-6">
+    <i
+      v-if="this.StateUser.message._id === comment.creator._id"
+      @click.stop="commentOptions = !commentOptions"
+      class="fa fa-ellipsis-v float-right cursor-pointer"
+    ></i>
+    <div
+      v-if="commentOptions"
+      class="bg-gray-400 float-right mr-2 text-black text-center"
+    >
+      <p
+        v-if="this.StateUser.message._id === comment.creator._id"
+        class="hover:bg-gray-300 cursor-pointer p-1"
+        @click="onClickEdit"
+      >
+        Edit comment
+      </p>
+      <p
+        v-if="this.StateUser.message._id === comment.creator._id"
+        class="hover:bg-gray-300 cursor-pointer p-1"
+        @click="deleteComment(comment._id)"
+      >
+        Delete Comment
+      </p>
+    </div>
+    <hr class="mt-6" />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { mapGetters, mapMutations, mapActions } from 'vuex'
+import nl2br from 'vue-nl2br'
 export default {
   name: 'Comment',
+
+  components: { nl2br },
 
   computed: mapGetters(['selectedPost', 'StateUser']),
 

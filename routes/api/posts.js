@@ -11,11 +11,11 @@ router.get('/search', searchPosts);
 router.get('/:id', getPost);
 router.post('/', requireAuth, createPost);
 router.post('/comment', requireAuth, addComment);
-router.patch('/edit-comment/:id', editComment);
+router.patch('/edit-comment/:id', requireAuth, editComment);
 router.patch('/:id', requireAuth, updatePost);
-router.patch('/like/:id', likePost);
-router.patch('/unlike/:id', unlikePost);
-router.patch('/comment/:id', deleteComment);
+router.patch('/like/:id', requireAuth, likePost);
+router.patch('/unlike/:id', requireAuth, unlikePost);
+router.patch('/comment/:id', requireAuth, deleteComment);
 router.delete('/:id', requireAuth, deletePost);
 
 export default router;

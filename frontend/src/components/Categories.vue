@@ -1,24 +1,21 @@
 <template>
     <div class="text-center">
-        <h2 class="text-xl mb-6">
-          Category
-        </h2>
-        <form @change="selectCategory">
-          <select class="pl-2 md:w-1/4 w-8/12 h-10 mb-2 text-black rounded-md" v-model="selectedCategory">
-          <option hidden value="">
-            -Select Category-
-          </option>
-            <option selected value=''>
-            -Select category-
-          </option>
-          <option v-for="category in allCategories" :key="category">
-            {{ category }}
-          </option>
-          </select>
-        </form>
-        <hr class="my-14">
-        <Search />
-    </div>
+    <h2 class="text-xl mb-6">Category</h2>
+    <form @change="selectCategory">
+      <select
+        class="pl-2 md:w-1/4 w-8/12 h-10 mb-2 text-black rounded-md"
+        v-model="selectedCategory"
+      >
+        <option hidden value="">-Select Category-</option>
+        <option selected value="">-Select category-</option>
+        <option v-for="category in allCategories" :key="category">
+          {{ category }}
+        </option>
+      </select>
+    </form>
+    <hr class="my-14" />
+    <Search />
+  </div>
 </template>
 
 <script>
