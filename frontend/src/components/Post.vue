@@ -150,7 +150,7 @@ export default {
         this.loadingTrue()
         axios.delete('/posts/' + this.selectedPost.message._id, id)
           .then(res => {
-            router.push('/posts')
+            router.back()
             console.log(res)
             this.loadingFalse()
           })
