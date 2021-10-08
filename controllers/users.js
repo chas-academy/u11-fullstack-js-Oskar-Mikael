@@ -125,7 +125,7 @@ export const setPrivateTrue = async (req, res) => {
     await User.updateOne(
       { _id },
       {
-        $set: { isPrivate: 1}
+        $set: { isPrivate: 1 }
       })
     res.status(200).json({ message: 'Profile updated' })
   } catch (error) {
@@ -153,7 +153,7 @@ export const setPrivateFalse = async (req, res) => {
 }
 
 export const adminUpdateUser = async (req, res) => {
-  const { username, email, bio, country } = req.body
+  const { username, email, bio, country, isAdmin } = req.body
 
   const token = req.headers.authorization;
 
@@ -175,7 +175,8 @@ export const adminUpdateUser = async (req, res) => {
             username,
             email,
             bio,
-            country
+            country,
+            isAdmin
           }
         }
       )

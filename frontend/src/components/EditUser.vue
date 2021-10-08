@@ -22,9 +22,11 @@
       <p class="errors" v-if="errors.type == 'email'">
         {{ errors.message }}
       </p>
-      <input
+      <textarea
         placeholder="Bio"
-        class="mb-8 text-black bg-gray-200 pl-2 md:w-1/4 w-8/12 h-10 rounded-md"
+        class="mb-8 text-black bg-gray-200 pl-2 md:w-1/2
+                w-8/12
+                h-32 rounded-md"
         type="text"
         name="bio"
         v-model="form.bio"
@@ -44,6 +46,12 @@
       <p class="errors" v-if="errors.type == 'country'">
         {{ errors.message }}
       </p>
+      <div class="flex justify-center">
+        <p class="mr-2">
+          Set Administrator
+        </p>
+      <input v-model="form.isAdmin" class="mt-1" type="checkbox"/>
+      </div>
       <button class="my-6 py-2 px-20 bg-blue-600 rounded-md" type="submit">
         Save
       </button>
@@ -69,7 +77,8 @@ export default {
         username: this.$store.getters.SelectedUser.username,
         email: this.$store.getters.SelectedUser.email,
         bio: this.$store.getters.SelectedUser.bio,
-        country: this.$store.getters.SelectedUser.country
+        country: this.$store.getters.SelectedUser.country,
+        isAdmin: this.$store.getters.SelectedUser.isAdmin
       },
       errors: '',
       countries: countryList
